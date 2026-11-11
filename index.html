@@ -1471,6 +1471,8 @@ body.cal-sheet-open { overflow:hidden; }
 .wb-other .money-read { padding:0; }
 .wb-other .wb-remove { align-self:center; margin-top:16px; }
 .others-hint { font-size:inherit; color:var(--muted); }
+.wb-others-link { margin:6px 0 0; color:var(--muted); font-size:.78rem; }
+.wb-others-link a { color:var(--ink); font-weight:700; }
 .wb-others-empty { margin:0; color:var(--muted); font-size:.82rem; }
 .wb-others-actions { display:flex; gap:8px; margin-top:10px; }
 /* 보내기 확인 체크 */
@@ -1518,12 +1520,13 @@ body.cal-sheet-open { overflow:hidden; }
   .submit-works-table th:last-child, .submit-works-table td:last-child { width:20%; }
   .submit-works-table tfoot td { font-weight:700; }
   .submit-works-skip { margin:2mm 0 0; color:#6e6e73; font-size:8.5pt; }
-  body.print-submit #tab-works, body.print-submit .send-confirm, body.print-submit .send-gate, body.print-submit .wb-others-actions, body.print-submit .wb-others-toggle i { display:none !important; }
+  body.print-submit #tab-works, body.print-submit .send-confirm, body.print-submit .send-gate, body.print-submit .wb-others-actions, body.print-submit .wb-others-link, body.print-submit .wb-others-toggle i { display:none !important; }
   body.print-submit .wb-others-row:not(.is-empty) { display:table-row !important; }
   body.print-submit .wb-others-toggle { border:0; padding:0; min-height:0; background:none; font-size:7.5pt; }
   body.print-submit .wb-other { grid-template-columns:1fr 2fr 1fr 1fr; padding:1mm; gap:1mm; }
   body.print-submit .wb-other .wb-remove, body.print-submit .others-hint { display:none !important; }
 }
+.wb-quotes select[data-wb-field="budgetId"] { min-width:150px; }
 </style>
 </head>
 <body>
@@ -1870,7 +1873,7 @@ body.cal-sheet-open { overflow:hidden; }
 
     <section class="tab-panel" id="tab-budget" aria-label="예산 관리">
       <article class="write-card" id="mybudget">
-        <header><div><h2>예산 관리</h2><p>ARC 진단을 받은 뒤 진단 금액과 받은 견적, 최종 계약 금액을 적어 주세요. 처음 정하신 공정별 예산은 <a href="#tab-works" data-goto="tab-works">공정별 공사계획</a>에 그대로 남습니다. 타업체 견적은 칸을 누르면 펼쳐서 업체별로 적을 수 있습니다. 금액은 60,000,000처럼 숫자로 적어도 되고, 6000만·2억 3천만처럼 한글로 적어도 됩니다.</p></div></header>
+        <header><div><h2>예산 관리</h2><p>ARC 진단을 받은 뒤 진단 금액과 받은 견적, 최종 계약 금액을 적어 주세요. 처음 정하신 공정별 예산은 <a href="#tab-works" data-goto="tab-works">공정별 공사계획</a>에 그대로 남습니다. 타업체 견적은 칸을 누르면 펼쳐서 업체별로 적을 수 있고, 업체 견적 비교와 서로 이어져 있어 한 곳에만 적으면 됩니다. 금액은 60,000,000처럼 숫자로 적어도 되고, 6000만·2억 3천만처럼 한글로 적어도 됩니다.</p></div></header>
         <div class="wb-summary" id="budgetSummary"></div>
         <div data-wb-table="budgets"></div>
       </article>
@@ -1878,7 +1881,7 @@ body.cal-sheet-open { overflow:hidden; }
 
     <section class="tab-panel" id="tab-quotes" aria-label="업체 견적 비교">
       <article class="write-card" id="myquotes">
-        <header><div><h2>업체 견적 비교</h2><p>다른 업체에서 받은 견적을 한 줄에 하나씩 적어 주세요. 범위가 같은지 먼저 맞춰 보세요. 같은 범위끼리만 금액을 나란히 보여 드립니다(부가세 맞춤). 견적서 파일은 보낼 때 카카오톡으로 함께 보내 주세요.</p></div></header>
+        <header><div><h2>업체 견적 비교</h2><p>다른 업체에서 받은 견적을 한 줄에 하나씩 적어 주세요. 공정을 고르면 예산 관리의 같은 공정 '타업체 견적' 칸에도 함께 보입니다(한 번만 적으면 됩니다). 범위가 같은지 먼저 맞춰 보세요. 같은 범위끼리만 금액을 나란히 보여 드립니다(부가세 맞춤). 견적서 파일은 보낼 때 카카오톡으로 함께 보내 주세요.</p></div></header>
         <div class="quote-summary" id="quoteSummary" hidden=""></div>
         <div data-wb-table="quotes"></div>
       </article>
@@ -1958,7 +1961,7 @@ body.cal-sheet-open { overflow:hidden; }
     <p data-copy-key="footer.note">예정 공정표이며 현장 상황과 자재 입고 일정에 따라 변경될 수 있습니다. 변경 시 날짜·내용·확인한 사람을 함께 기록해 주세요.</p>
   </footer>
 
-  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"f33df193-fe02-4eb7-a050-1abf9e43de09","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1c72e788-fc62-4113-ab60-f85108a85c1f","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1f5efbcd-ae61-4c72-85b0-6841a67b9b9c","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"68d49bf1-3fda-4055-b81d-f7b69cf42a47","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"3c265cd9-db84-4109-accb-d065f462cb52","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"61e5b623-aa0b-49a7-9e4d-f5e2bc629736","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"18625419-648f-45c0-8a09-b4146d5a00aa","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"78cd944d-e05e-405f-b620-e76efc972ca8","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"e7a34032-629b-44a2-922b-51486687bc47","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"3cc0aada-0e44-4c1a-886a-43821a88541d","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"8db875df-61d7-4898-b200-8e39a3290a1c","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"b83c793c-b16c-49c1-8145-87b90969b593","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"974d7fc5-a236-4b39-bb6a-31560f431ad5","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"e5d0e7f3-c1a1-4110-a401-d1f5c47255ea","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"7875374c-9750-4fe6-8fba-3e6fdb95fa13","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1571eef8-f634-4873-86d1-b20a5a5a628d","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"5e8c821f-f781-4c15-8384-9ba58c794ebb","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]}],"quotes":[],"materials":[],"confirmed":false,"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T17:25:52.913Z"}</script>
+  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"a45a0e81-05eb-4001-9e4a-94a78c1709a7","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"718ba121-ca2e-4a54-b139-bb5e4be47dda","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"80c34ccf-5db1-4fea-83f0-e62eb8631048","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"d4077778-95bf-4989-9f03-ff2f67ae1a34","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"9eee0e7a-526d-4b09-9b23-ce27a58906cf","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"a1b31c37-b195-47f8-a8f7-2146d195e324","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"f557ee1c-9433-44c8-871a-d6a308a8f3b0","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"699f0395-5d3a-4485-8bf3-1524cd0d8732","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"4227dbbb-45b0-40bf-b392-c2f75e424d5c","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1fb864ba-3cd8-4ec7-802f-8b943ac10195","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"a9f7567c-61de-4744-a4f2-a4446c5633a8","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"269064fe-a5a5-42c2-a72d-5ee93ea909d1","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"14c81e76-9fe2-42da-adbf-d743d3ff325a","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"cc438388-0c8d-4ad2-8738-74426e7269e0","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"cc14a702-6692-4d70-b71f-5abfe48dd5e4","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"7dec3906-f705-4391-8955-1b2692d2acbc","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"5bfddb9c-c23b-4612-9978-4ebcbd6086fe","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]}],"quotes":[],"materials":[],"confirmed":false,"questions":"","unit":"won","quotesLinked":true},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T17:40:47.022Z"}</script>
   <script>(async()=>{
 // 화면을 그리기 전 원본 (파일 저장 때 이걸 씀: 화면에서 붙인 버튼이 두 번 생기지 않게)
 const pristineHtml=`<!doctype html>\n${document.documentElement.outerHTML}`;
@@ -2621,6 +2624,7 @@ function defaultBudgetRows(){
     .map((trade)=>({id:wbId(),trade,priority:"미정",plan:"",quote:"",contract:"",memo:"",want:"",skip:false,diag:"",crew:"",others:[]}));
 }
 // 타업체 견적(업체별) 한 줄
+function otherFilled(o){return ["company","scope","amount"].some((k)=>String(o?.[k]||"").trim());}
 function otherBlank(){return {id:wbId(),company:"",scope:"",amount:"",delivery:"미확인"};}
 // 11/12 판 바꿈: 예전 '받은 견적'은 타업체 견적 1건으로, 예전 자재 칸(공간·모델·색상·수량·구입처)은 '사양' 한 칸으로 옮김. 원래 칸은 지우지 않음. 한 번만 함.
 function upgradeBudgetRow(row){
@@ -2636,10 +2640,31 @@ function upgradeMaterialRow(row){
   row.others=row.others.filter((o)=>o&&typeof o==="object").map((o)=>({...o,id:o.id||wbId()}));
   return row;
 }
+// 업체 견적 비교의 견적을 예산 표 공정과 이어 붙임(budgetId). 공종 이름이 비슷하면("창호"→"창호(샷시)") 자동으로.
+// 공정 칸에 따로 적었던 타업체 견적은 업체 견적 비교로 옮기고, 원래 목록은 othersMoved에 그대로 남김. 한 번만 함.
+function linkQuotes(wb){
+  if(wb.quotesLinked)return wb;
+  const norm=(s)=>String(s||"").replace(/\s/g,"");
+  const head=(s)=>norm(s).split(/[·(]/)[0];
+  const match=(t)=>{const n=norm(t); if(!n)return null; return wb.budgets.find((b)=>norm(b.trade)===n)||wb.budgets.find((b)=>head(b.trade)&&(head(b.trade)===head(n)||norm(b.trade).includes(n)))||null;};
+  wb.quotes.forEach((q)=>{if(!q.budgetId){const b=match(q.trade); if(b)q.budgetId=b.id;} if(!q.delivery)q.delivery="미확인";});
+  wb.budgets.forEach((b)=>{
+    const list=(b.others||[]).filter(otherFilled);
+    list.forEach((o)=>{
+      const fromOld=!String(o.company||"").trim()&&String(o.scope||"").startsWith("(전에 '받은 견적'");
+      if(fromOld&&wb.quotes.some((q)=>q.budgetId===b.id&&toNumber(q.amount)===toNumber(o.amount)))return; // 같은 금액 견적이 이미 있으면 겹쳐 넣지 않음
+      wb.quotes.push({id:o.id||wbId(),trade:b.trade,budgetId:b.id,company:o.company||"",amount:o.amount||"",vat:"미확인",same:"미확인",scope:o.scope||"",missing:"",date:"",delivery:o.delivery||"미확인"});
+    });
+    if((b.others||[]).length)b.othersMoved=b.others;
+    b.others=[];
+  });
+  wb.quotesLinked=true;
+  return wb;
+}
 function normalizeWorkbench(value){
   const wb=value&&typeof value==="object"?value:{};
   const rows=(list)=>Array.isArray(list)?list.filter((row)=>row&&typeof row==="object").map((row)=>({...row,id:row.id||wbId()})):null;
-  return {
+  return linkQuotes({
     ...wb, // 모르는 칸도 버리지 않음(새 판에서 더한 칸을 옛 판이 지우지 않게, 11/12)
     budgets:(rows(wb.budgets)||defaultBudgetRows()).map(upgradeBudgetRow),
     quotes:rows(wb.quotes)||[],
@@ -2647,11 +2672,11 @@ function normalizeWorkbench(value){
     confirmed:Boolean(wb.confirmed),
     questions:typeof wb.questions==="string"?wb.questions:"",
     unit:value&&typeof value==="object"?(wb.unit||"manwon"):"won",
-  };
+  });
 }
 // 금액 읽기: "15,000,000" "1500만" "2억 3천만원" "2억3500만" "3.5억" "1억5천" "3천5백만" "천오백만" "약 1500만" "₩15,000,000" → 원
 // '억' 뒤에 '만' 없이 1만 미만 숫자가 오면 '만'으로 읽음("1억5천" = 1억 5천만원, 대표 11/12 결정 1단계)
-const toNumber=(value)=>{
+function toNumber(value){
   let text=String(value??"").replace(/[,\s₩]/g,"").replace(/(정도|쯤)$/,"").replace(/원$/,"").replace(/^(약|대략)/,"").trim(); if(!text)return null;
   if(/^-?\d+(\.\d+)?$/.test(text))return Number(text);
   const digit={"일":1,"이":2,"삼":3,"사":4,"오":5,"육":6,"칠":7,"팔":8,"구":9};
@@ -2672,7 +2697,7 @@ const toNumber=(value)=>{
   let rest=group+(cur??0);
   if(sawEok&&!sawMan&&rest>0&&rest<10000)rest*=10000;
   return Math.round(total+rest);
-};
+}
 // 금액 칸 아래에 읽은 값을 늘 보임(휴대폰은 말풍선이 안 보임)
 const MONEY_LIMIT=100000000000; // 1,000억
 function moneyRead(field){
@@ -2717,7 +2742,7 @@ const wbTables={
   },
   quotes:{
     columns:[
-      {key:"trade",label:"공종",type:"text"},
+      {key:"budgetId",label:"공정",type:"tradepick"},
       {key:"company",label:"업체명",type:"text"},
       {key:"amount",label:"견적 금액(원)",type:"money"},
       {key:"vat",label:"부가세",type:"select",options:["미확인","포함","별도(10%)"]},
@@ -2725,9 +2750,10 @@ const wbTables={
       {key:"same",label:"다른 업체와 범위 같음?",type:"select",options:["미확인","같음","조건 다름"]},
       {key:"scope",label:"포함된 범위·사양",type:"longtext",width:"wide"},
       {key:"missing",label:"빠진 것·추가 조건",type:"longtext",width:"wide"},
+      {key:"delivery",label:"배송",type:"select",options:["미확인","포함","별도","해당 없음"]},
       {key:"date",label:"견적일",type:"date"},
     ],
-    blank:()=>({id:makeId(),trade:"",company:"",amount:"",vat:"미확인",same:"미확인",scope:"",missing:"",date:""}),
+    blank:()=>({id:makeId(),trade:"",budgetId:"",company:"",amount:"",vat:"미확인",same:"미확인",scope:"",missing:"",date:"",delivery:"미확인"}),
     addLabel:"+ 견적 추가",
   },
   materials:{
@@ -2746,7 +2772,6 @@ const wbTables={
 function quoteVatTotal(row){const n=toNumber(row.amount); if(!Number.isFinite(n)||n===null)return null; if(row.vat==="별도(10%)")return Math.round(n*1.1); if(row.vat==="포함")return n; return null;}
 
 const shortMoney=(n)=>manwon(n).replace(/원$/,"");
-const otherFilled=(o)=>["company","scope","amount"].some((k)=>String(o?.[k]||"").trim());
 function othersText(all){
   const list=all.filter(otherFilled);
   const vals=list.map((o)=>toNumber(o.amount)).filter((n)=>Number.isFinite(n)&&n!==null).sort((a,b)=>a-b);
@@ -2755,14 +2780,18 @@ function othersText(all){
   return vals.length===1||vals[0]===vals.at(-1)?`${list.length}건 · ${shortMoney(vals[0])}`:`${list.length}건 · ${shortMoney(vals[0])}~${shortMoney(vals.at(-1))}`;
 }
 const openOthers=new Set();
+const othersOf=(name,row)=>name==="budgets"?data.workbench.quotes.filter((q)=>q.budgetId===row.id):(row.others||(row.others=[]));
+function addOther(name,row){if(name==="budgets"){const q={...wbTables.quotes.blank(),budgetId:row.id,trade:row.trade}; data.workbench.quotes.push(q); return q;} const o=otherBlank(); othersOf(name,row).push(o); return o;}
+function removeOther(name,row,o){if(name==="budgets")data.workbench.quotes=data.workbench.quotes.filter((x)=>x.id!==o.id); else row.others=row.others.filter((x)=>x.id!==o.id);}
+const tradeOf=(q)=>(data.workbench.budgets.find((b)=>b.id===q.budgetId)?.trade)||String(q.trade||"").trim();
 function buildOthersPanel(name,row,colspan,refresh){
-  const tr=document.createElement("tr"); tr.className="wb-others-row"; tr.dataset.othersFor=row.id; tr.hidden=!openOthers.has(row.id); if(!row.others.length)tr.classList.add("is-empty");
+  const tr=document.createElement("tr"); tr.className="wb-others-row"; tr.dataset.othersFor=row.id; tr.hidden=!openOthers.has(row.id); if(!othersOf(name,row).filter(otherFilled).length)tr.classList.add("is-empty");
   const td=document.createElement("td"); td.colSpan=colspan; tr.append(td);
   const box=document.createElement("div"); box.className="wb-others";
   const title=document.createElement("p"); title.className="wb-others-title"; title.textContent=`${row.trade||row.item||"이 줄"} · 타업체 견적`; box.append(title);
   const list=document.createElement("div"); list.className="wb-others-list";
   const fields=[["company","업체 이름","text","예) ○○인테리어"],["scope",name==="materials"?"사양·포함 범위":"포함 범위·사양","longtext","예) 철거 포함, 폐기물 별도"],["amount","금액(원)","money",""],["delivery","배송 포함","select",["미확인","포함","별도","해당 없음"]]];
-  row.others.forEach((o)=>{
+  othersOf(name,row).forEach((o)=>{
     const line=document.createElement("div"); line.className="wb-other";
     fields.forEach(([key,label,type,extra])=>{
       const wrap=document.createElement("label"); wrap.className=`wb-other-${key}`; const cap=document.createElement("span"); cap.textContent=label; wrap.append(cap);
@@ -2776,13 +2805,14 @@ function buildOthersPanel(name,row,colspan,refresh){
       f.addEventListener(type==="select"?"change":"input",()=>{o[key]=f.value; if(type==="money")moneyRead(f); persistData(); refresh();});
     });
     const del=document.createElement("button"); del.type="button"; del.className="wb-remove"; del.textContent="×"; del.setAttribute("aria-label","이 업체 견적 삭제");
-    del.addEventListener("click",()=>{if((o.company||o.amount||o.scope)&&!confirm("이 업체 견적을 삭제할까요?"))return; row.others=row.others.filter((x)=>x.id!==o.id); persistData(); renderWbTable(name);});
+    del.addEventListener("click",()=>{if((o.company||o.amount||o.scope)&&!confirm("이 업체 견적을 삭제할까요?"))return; removeOther(name,row,o); persistData(); renderWbTable(name);});
     line.append(del); list.append(line);
   });
-  if(!row.others.length){const empty=document.createElement("p"); empty.className="wb-others-empty"; empty.textContent="아직 적은 타업체 견적이 없습니다."; list.append(empty);}
+  if(!othersOf(name,row).length){const empty=document.createElement("p"); empty.className="wb-others-empty"; empty.textContent="아직 적은 타업체 견적이 없습니다."; list.append(empty);}
+  if(name==="budgets"){const link=document.createElement("p"); link.className="wb-others-link"; link.innerHTML='여기 적은 견적은 <a href="#tab-quotes" data-goto="tab-quotes">업체 견적 비교</a>에도 함께 들어갑니다. 부가세·범위 비교는 그 화면에서 하세요.'; list.append(link);}
   box.append(list);
   const add=document.createElement("button"); add.type="button"; add.className="small-button wb-other-add"; add.textContent="+ 업체 추가";
-  add.addEventListener("click",()=>{const o=otherBlank(); row.others.push(o); openOthers.add(row.id); persistData(); renderWbTable(name); document.querySelector(`[data-other-row="${CSS.escape(o.id)}"][data-other-field="company"]`)?.focus();});
+  add.addEventListener("click",()=>{const o=addOther(name,row); openOthers.add(row.id); persistData(); renderWbTable(name); document.querySelector(`[data-other-row="${CSS.escape(o.id)}"][data-other-field="company"]`)?.focus();});
   const close=document.createElement("button"); close.type="button"; close.className="small-button wb-other-close"; close.textContent="접기";
   close.addEventListener("click",()=>{openOthers.delete(row.id); renderWbTable(name);});
   const actions=document.createElement("div"); actions.className="wb-others-actions"; actions.append(add,close); box.append(actions);
@@ -2799,17 +2829,25 @@ function renderWbTable(name){
   rows.forEach((row)=>{
     const tr=document.createElement("tr"); if(row.skip)tr.classList.add("wb-skip");
     let othersButton=null;
-    const refreshOthers=()=>{if(!othersButton)return; const s=othersButton.querySelector("span"); s.textContent=othersText(row.others); if(!row.others.filter(otherFilled).length){const hint=document.createElement("small"); hint.className="others-hint"; hint.textContent=" · 눌러서 적기"; s.append(hint);} const blank=!row.others.some((o)=>["company","scope","amount"].some((k)=>String(o[k]||"").trim())); othersButton.closest("tr")?.nextElementSibling?.classList.toggle("is-empty",blank);};
+    const refreshOthers=()=>{if(!othersButton)return; const s=othersButton.querySelector("span"); s.textContent=othersText(othersOf(name,row)); if(!othersOf(name,row).filter(otherFilled).length){const hint=document.createElement("small"); hint.className="others-hint"; hint.textContent=" · 눌러서 적기"; s.append(hint);} const blank=!othersOf(name,row).some(otherFilled); othersButton.closest("tr")?.nextElementSibling?.classList.toggle("is-empty",blank);};
     spec.columns.forEach((col)=>{
       const td=document.createElement("td"); td.dataset.label=col.label;
       if(col.type==="calc"){td.className="wb-calc"; td.dataset.calc=row.id; const v=quoteVatTotal(row); td.textContent=v===null?"-":manwon(v); tr.append(td); return;}
       if(col.type==="others"){
-        if(!Array.isArray(row.others))row.others=[];
         othersButton=document.createElement("button"); othersButton.type="button"; othersButton.className="wb-others-toggle"; othersButton.dataset.wbRow=row.id; othersButton.dataset.wbField="others";
         othersButton.setAttribute("aria-expanded",String(openOthers.has(row.id)));
         const s=document.createElement("span"); othersButton.append(s); const arrow=document.createElement("i"); arrow.setAttribute("aria-hidden","true"); othersButton.append(arrow);
-        othersButton.addEventListener("click",()=>{if(openOthers.has(row.id))openOthers.delete(row.id); else{openOthers.add(row.id); if(!row.others.length){row.others.push(otherBlank()); persistData();}} renderWbTable(name); const first=document.querySelector(`[data-others-for="${CSS.escape(row.id)}"] [data-other-field="company"]`); if(openOthers.has(row.id)&&first&&!first.value)first.focus();});
+        othersButton.addEventListener("click",()=>{if(openOthers.has(row.id))openOthers.delete(row.id); else openOthers.add(row.id); renderWbTable(name); const box=document.querySelector(`[data-others-for="${CSS.escape(row.id)}"]`); if(openOthers.has(row.id))(box?.querySelector('[data-other-field="company"]')||box?.querySelector(".wb-other-add"))?.focus();});
         td.className="wb-others-cell"; td.append(othersButton); tr.append(td); return;
+      }
+      if(col.type==="tradepick"){
+        const field=document.createElement("select"); const known=data.workbench.budgets.some((b)=>b.id===row.budgetId);
+        const first=document.createElement("option"); first.value=""; first.textContent=known?"공정 고르기":(String(row.trade||"").trim()?`공정 고르기 (적은 이름: ${row.trade})`:"공정 고르기"); field.append(first);
+        data.workbench.budgets.forEach((b)=>{const o=document.createElement("option"); o.value=b.id; o.textContent=b.trade||"(이름 없는 공정)"; field.append(o);});
+        field.value=known?row.budgetId:"";
+        field.setAttribute("aria-label",col.label); field.dataset.wbRow=row.id; field.dataset.wbField=col.key;
+        field.addEventListener("change",()=>{row.budgetId=field.value; const b=data.workbench.budgets.find((x)=>x.id===field.value); if(b)row.trade=b.trade; persistData(); refreshWbSummary(name,row);});
+        td.append(field); tr.append(td); return;
       }
       let field;
       if(col.type==="select"){field=document.createElement("select"); col.options.forEach((option)=>{const o=document.createElement("option"); o.value=option; o.textContent=option; field.append(o);}); field.value=row[col.key]||col.options[0];}
@@ -2823,7 +2861,7 @@ function renderWbTable(name){
     });
     const action=document.createElement("td"); action.className="wb-action-col";
     const remove=document.createElement("button"); remove.type="button"; remove.className="wb-remove"; remove.textContent="×"; remove.setAttribute("aria-label","이 줄 삭제");
-    remove.addEventListener("click",()=>{const filled=spec.columns.some((col)=>col.type!=="select"&&col.type!=="calc"&&col.type!=="others"&&String(row[col.key]||"").trim())||(row.others||[]).length||String(row.want||"").trim()||String(row.plan||"").trim(); if(filled&&!confirm(name==="budgets"?"이 공정을 삭제할까요? 공정별 공사계획에서도 함께 지워집니다.":"이 줄을 삭제할까요?"))return; data.workbench[name]=data.workbench[name].filter((entry)=>entry.id!==row.id); persistData(); renderWbTable(name); if(name==="budgets")renderWorks();});
+    remove.addEventListener("click",()=>{const filled=spec.columns.some((col)=>col.type!=="select"&&col.type!=="calc"&&col.type!=="others"&&String(row[col.key]||"").trim())||othersOf(name,row).length||String(row.want||"").trim()||String(row.plan||"").trim(); if(filled&&!confirm(name==="budgets"?"이 공정을 삭제할까요? 공정별 공사계획에서도 함께 지워집니다. 적어 둔 업체 견적은 업체 견적 비교에 남습니다.":"이 줄을 삭제할까요?"))return; data.workbench[name]=data.workbench[name].filter((entry)=>entry.id!==row.id); persistData(); renderWbTable(name); if(name==="budgets")renderWorks();});
     action.append(remove); tr.append(action); body.append(tr);
     if(othersButton){body.append(buildOthersPanel(name,row,spec.columns.length+1,refreshOthers)); refreshOthers();}
   });
@@ -2932,7 +2970,7 @@ function printScope(rows,all=false){
 }
 function renderQuoteSummary(){
   const box=document.querySelector("#quoteSummary"); if(!box)return; box.innerHTML="";
-  const byTrade=new Map(); data.workbench.quotes.forEach((row)=>{const trade=String(row.trade||"").trim(); if(!trade)return; if(!byTrade.has(trade))byTrade.set(trade,[]); byTrade.get(trade).push(row);});
+  const byTrade=new Map(); data.workbench.quotes.forEach((row)=>{const trade=tradeOf(row); if(!trade||!otherFilled(row))return; if(!byTrade.has(trade))byTrade.set(trade,[]); byTrade.get(trade).push(row);});
   if(!byTrade.size){box.hidden=true; return;} box.hidden=false;
   // 범위가 '같음'인 견적끼리만 금액 순서. '조건 다름'·'미확인'은 '범위 확인 전'으로 따로 (11/12 1단계)
   byTrade.forEach((rows,trade)=>{
@@ -3022,8 +3060,8 @@ function filledSummary(){
     ["현장 정보",["customer","home","area","start","end","budget"].filter((k)=>String(p[k]||"").trim()).length,6],
     ["공사 일정",data.schedule.length,null],
     ["공정별 공사계획",wb.budgets.filter((r)=>!r.skip&&String(r.want||"").trim()).length,null],
-    ["예산·견적",wb.budgets.filter((r)=>["diag","crew","contract"].some((k)=>String(r[k]||"").trim())||(r.others||[]).some(otherFilled)).length,null],
-    ["업체 견적",wb.quotes.length,null],
+    ["예산·견적",wb.budgets.filter((r)=>["diag","crew","contract"].some((k)=>String(r[k]||"").trim())||data.workbench.quotes.some((q)=>q.budgetId===r.id&&otherFilled(q))).length,null],
+    ["업체 견적",wb.quotes.filter(otherFilled).length,null],
     ["자재",wb.materials.length,null],
     ["궁금한 점",String(wb.questions||"").split(/\n/).filter((line)=>line.trim()).length,null],
   ];
@@ -3088,6 +3126,8 @@ function showTab(id,{scroll=false}={}){
   try{localStorage.setItem(tabKey,id);}catch{}
   if(id==="tab-send")renderSendStatus();
   if(id==="tab-works")renderWorks();
+  if(id==="tab-quotes")renderWbTable("quotes");
+  if(id==="tab-budget")renderWbTable("budgets");
   if(scroll)document.querySelector("#tabNav")?.scrollIntoView({behavior:"smooth",block:"start"});
   return true;
 }
@@ -3348,7 +3388,7 @@ function renderSubmitWorks(){
 // 빈 화면이면 맨 위에 '저장한 파일 불러오기' 안내
 (function resumeNotice(){
   const box=document.querySelector("#resumeNotice"); if(!box)return;
-  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.plan||r.quote||r.contract||r.want||r.diag||r.crew||(r.others||[]).length)&&!(data.workbench?.quotes||[]).length&&!(data.workbench?.materials||[]).length;
+  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.plan||r.quote||r.contract||r.want||r.diag||r.crew)&&!(data.workbench?.quotes||[]).length&&!(data.workbench?.materials||[]).length;
   // 빈 화면이면 긴 안내, 적은 내용이 있으면 얇은 줄(저장/불러오기) — 항상 보임, ×는 새로 고치기 전까지만
   const sync=()=>{if(box.dataset.closed)return; box.hidden=false; box.classList.toggle("compact",!empty());};
   sync();
