@@ -1271,6 +1271,59 @@ body:not([data-page="tab-visit"]) .page-head { display:none; }
 .noscript-note { margin:24px 16px; padding:22px 20px; border:1px solid #f1c4bf; border-radius:16px; background:#fff4f2; color:#5a2a24; }
 .noscript-note strong { display:block; margin-bottom:8px; color:#c0392b; font-size:1.05rem; }
 .noscript-note p { margin:0; line-height:1.7; }
+
+/* ===== 달력에서 바로 공정 적기 (대표 11/11) ===== */
+.cal-add-hint { margin:0 0 14px; color:var(--muted); font-size:.84rem; }
+.calendar-day[data-date] { cursor:pointer; transition:border-color .15s, box-shadow .15s; }
+.calendar-day[data-date]:hover, .calendar-day[data-date]:focus-visible { border-color:#059BC5; box-shadow:0 0 0 2px rgba(5,155,197,.15); outline:none; }
+.calendar-event-list em.cont { opacity:.72; font-weight:700; }
+.cal-sheet { position:fixed; inset:0; z-index:400; display:grid; place-items:center; padding:16px; }
+.cal-sheet[hidden] { display:none; }
+.cal-sheet-dim { position:absolute; inset:0; background:rgba(29,29,31,.38); }
+.cal-sheet-box { position:relative; width:min(460px,100%); max-height:calc(100vh - 32px); overflow:auto; padding:22px 22px 18px; border-radius:20px; background:#fff; box-shadow:0 24px 60px rgba(0,0,0,.18); }
+.cal-sheet-box header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+.cal-sheet-box h3 { margin:0; font-size:1.2rem; }
+.cal-sheet-x { width:34px; height:34px; border:0; border-radius:50%; background:var(--band,#f5f5f7); font-size:1.3rem; line-height:1; cursor:pointer; }
+.cal-sheet-mode { margin:14px 0 8px; color:var(--muted); font-size:.78rem; font-weight:700; }
+.cal-sheet-item { display:flex; align-items:center; gap:8px; padding:10px 12px; border:1px solid var(--line,#e5e5ea); border-left:4px solid var(--muted); border-radius:12px; margin-bottom:6px; }
+.cal-sheet-item.required { border-left-color:var(--clay,#c98268); }
+.cal-sheet-item.deadline { border-left-color:#059BC5; }
+.cal-sheet-item > div { flex:1; min-width:0; display:grid; gap:2px; }
+.cal-sheet-item small { color:var(--muted); font-size:.76rem; }
+.cal-sheet-item button { flex:0 0 auto; padding:6px 10px; border:1px solid var(--line,#e5e5ea); border-radius:980px; background:#fff; font:inherit; font-size:.76rem; cursor:pointer; }
+.cal-sheet-item button.danger { color:#c0392b; }
+.cal-sheet-form { display:grid; gap:12px; }
+.cal-sheet-form > label, .cal-sheet-dates label { display:grid; gap:6px; font-size:.8rem; font-weight:700; color:var(--ink); }
+.cal-sheet-form input[type="text"], .cal-sheet-form input[type="date"] { width:100%; min-height:44px; padding:10px 12px; border:1px solid var(--line,#d2d2d7); border-radius:12px; font:inherit; font-size:16px; background:#fff; box-sizing:border-box; }
+.cal-sheet-dates { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.cal-sheet-type { display:flex; gap:6px; flex-wrap:wrap; }
+.cal-sheet-type label { cursor:pointer; }
+.cal-sheet-type input { position:absolute; opacity:0; pointer-events:none; }
+.cal-sheet-type span { display:inline-block; padding:8px 14px; border:1px solid var(--line,#d2d2d7); border-radius:980px; font-size:.82rem; }
+.cal-sheet-type input:checked + span { border-color:var(--ink); background:var(--ink); color:#fff; }
+.cal-sheet-type input[value="required"]:checked + span { border-color:var(--clay,#c98268); background:var(--clay,#c98268); }
+.cal-sheet-type input[value="deadline"]:checked + span { border-color:#059BC5; background:#059BC5; }
+.cal-sheet-type input:focus-visible + span { outline:2px solid #059BC5; outline-offset:2px; }
+.cal-sheet-quick { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.cal-sheet-quick button { padding:7px 12px; border:1px solid var(--line,#d2d2d7); border-radius:980px; background:#fff; font:inherit; font-size:.8rem; cursor:pointer; }
+.cal-sheet-quick button:hover { border-color:var(--ink); }
+.cal-sheet-weekend { margin-left:auto; font-size:.8rem; display:flex; align-items:center; gap:4px; }
+.cal-sheet-range { margin:-4px 0 0; color:#05799a; font-size:.8rem; min-height:0; }
+.cal-sheet-range:empty { display:none; }
+.cal-sheet-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px; }
+.cal-sheet-actions button { min-height:44px; padding:10px 18px; border-radius:980px; font:inherit; font-size:.88rem; font-weight:700; cursor:pointer; }
+.cal-sheet-cancel { border:1px solid var(--line,#d2d2d7); background:#fff; }
+.cal-sheet-save { border:0; background:var(--ink,#1d1d1f); color:#fff; }
+body.cal-sheet-open { overflow:hidden; }
+.wb-weekend { display:flex; align-items:center; gap:4px; margin-top:6px; font-size:.74rem; color:var(--muted); white-space:nowrap; }
+@media (max-width:720px) {
+  .cal-sheet { place-items:end center; padding:0; }
+  .cal-sheet-box { width:100%; max-height:92vh; border-radius:20px 20px 0 0; padding:20px 16px calc(16px + env(safe-area-inset-bottom)); }
+}
+@media print { .cal-sheet, .cal-add-hint { display:none !important; } }
+
+/* 기간 공정의 이어지는 날: 색 칠하지 않음 */
+.calendar-day.has-event.cont-day { background:#fff; }
 </style>
 </head>
 <body>
@@ -1667,7 +1720,7 @@ body:not([data-page="tab-visit"]) .page-head { display:none; }
     <p data-copy-key="footer.note">예정 공정표이며 현장 상황과 자재 입고 일정에 따라 변경될 수 있습니다. 변경 시 날짜·내용·확인한 사람을 함께 기록해 주세요.</p>
   </footer>
 
-  <script id="arc-seed-data" type="application/json">{"instanceId":"f67a89a8-71f0-4b64-8425-bddd79e66bdd","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"13fae941-bd1c-46ac-b61e-7be1a4b3f152","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1a9b3203-c4ec-4029-ba92-271bdd0cbf41","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"f0649f8e-d2df-4330-be7f-3f3de729c337","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"733d1dbe-5a8e-4d87-b194-3bb623e8d709","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1143532e-5930-44a4-bad3-b2a22341cdb5","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"db47e602-583b-4597-a060-1e08e9448bf1","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"c2a85b26-617f-40c4-9cea-5472bca2011f","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"27c5ea60-578a-4fb5-9674-f8e256f05228","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"13ecbd4e-009c-4ddd-9b68-617dbda44408","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"21d6b578-359f-4659-b983-772558cfb432","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"2350c304-010a-4d82-99c1-e05644bcaa85","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"9055ab1f-2964-4406-88b7-a14c866171a4","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"fe7f5419-9e3e-4aae-9bc5-dc052af91ea9","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"f246fbb6-3cc9-4199-8f26-facac1f4eadb","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"f11bd849-4407-4640-b8bc-848a2656b883","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"517c4ebb-64cd-40e9-899b-2f02d525f66f","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"d77a78e6-ebd6-457c-b5d2-e332b56d8bd9","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":""}],"quotes":[],"materials":[],"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T09:11:41.182Z"}</script>
+  <script id="arc-seed-data" type="application/json">{"instanceId":"b78ca63b-5875-4182-847e-80b2d6a781d3","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"66ba630a-616b-465b-ab9f-7151a414ab27","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"68d84802-79ac-46f0-b10f-337c4fd80118","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"2c1e8864-853b-4eda-8eb6-9e1a218d8664","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7e8e0868-f7d3-43a8-a6d7-def7e1f357cc","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"a438f49b-b113-45a6-aff2-c48bc4029bb9","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7520856d-adc6-44e4-94bb-7143567c4a9e","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"8f471762-3b93-4843-96b3-79c8616c3bb8","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"d70c5808-7d2a-4c7c-994a-85da03d6d6c4","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"4f7af44a-ec7f-4a88-ab0a-8d5d458142b3","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"b1e12224-734b-4871-92a6-615890ce5c76","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"15acd342-e541-45b4-bb89-6dbb04c8cf34","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"04c136ab-5ac0-419f-a51e-3b48735c2118","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"e3350285-8df1-42f5-97c9-6296c515ef26","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"90740242-2ae3-4b13-9153-47619905a4df","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"48d78939-0a86-4d80-ba3b-38d5d067303d","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"6a4b14bc-6401-4982-96c3-d22b9e1db6b5","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"0c9e8844-58ba-4b81-b07a-df507a5237e2","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":""}],"quotes":[],"materials":[],"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T11:37:13.918Z"}</script>
   <script>(async()=>{
 // 화면을 그리기 전 원본 (파일 저장 때 이걸 씀: 화면에서 붙인 버튼이 두 번 생기지 않게)
 const pristineHtml=`<!doctype html>\n${document.documentElement.outerHTML}`;
@@ -1870,12 +1923,25 @@ function renderPlannerNotes(){
   document.querySelector("#plannerImportantWrap").hidden=!important.textContent.trim();
   section.hidden=!general.textContent.trim()&&!important.textContent.trim();
 }
+// 기간 공정: 시작~마지막 날 사이의 날짜들 (주말 빼기 선택 시 토·일 제외, 시작일은 항상 포함)
+function scheduleOccurs(item){
+  const out=[]; if(!item||!item.date)return out;
+  const start=isoDate(item.date), end=item.end&&item.end>item.date?isoDate(item.end):start;
+  for(const d=new Date(start);d<=end&&out.length<400;d.setDate(d.getDate()+1)){const w=d.getDay(); if(item.skipWeekend&&d>start&&(w===0||w===6))continue; out.push(new Date(d));}
+  return out;
+}
+function scheduleRangeText(item){
+  if(!item?.date)return "";
+  if(!item.end||item.end<=item.date)return formatDate(item.date);
+  const days=scheduleOccurs(item).length;
+  return `${formatDate(item.date)} ~ ${formatDate(item.end)} (${days}일${item.skipWeekend?", 주말 제외":""})`;
+}
 function selectCalendarEvent(item) {
   if (!item) return;
   selectedEventId=item.id;
   document.querySelectorAll(".calendar-day.selected").forEach((day)=>day.classList.remove("selected"));
   document.querySelector(`[data-id="${CSS.escape(item.id)}"]`)?.classList.add("selected");
-  document.querySelector("#detailDate").textContent=formatDate(item.date);
+  document.querySelector("#detailDate").textContent=scheduleRangeText(item);
 const title=document.querySelector("#detailTitle"); title.textContent=item.title; title.dataset.eventId=item.id; title.dataset.eventField="title";
 const detail=document.querySelector("#detailText"); detail.textContent=item.detail||""; detail.dataset.eventId=item.id; detail.dataset.eventField="detail";
 const prepare=document.querySelector("#detailPrepare"); prepare.textContent=[item.ruleNote,item.prepare].filter(Boolean).join(" · ")||"준비사항을 확인하세요."; prepare.dataset.eventId=item.id; prepare.dataset.eventField="prepare";
@@ -1884,7 +1950,7 @@ const type=document.querySelector("#detailType"); type.className=`detail-type ${
 }
 function renderMonth(year, month) {
   const monthEvents=new Map();
-  data.schedule.filter((item)=>{const d=isoDate(item.date); return d.getFullYear()===year&&d.getMonth()===month;}).forEach((item)=>{const day=Number(item.date.slice(-2)); if(!monthEvents.has(day))monthEvents.set(day,[]); monthEvents.get(day).push(item);});
+  data.schedule.forEach((item)=>scheduleOccurs(item).forEach((d)=>{if(d.getFullYear()!==year||d.getMonth()!==month)return; const day=d.getDate(); if(!monthEvents.has(day))monthEvents.set(day,[]); monthEvents.get(day).push(item);}));
 const firstDay=new Date(year,month,1).getDay();
 const lastDate=new Date(year,month+1,0).getDate();
 const panel=document.createElement("section"); panel.className="month-panel";
@@ -1893,27 +1959,29 @@ const grid=panel.querySelector(".calendar-grid"); for(let i=0;i<firstDay;i+=1)gr
   for(let day=1;day<=lastDate;day+=1){
     const items=monthEvents.get(day)||[];
 const date=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
-    if(!items.length){const cell=document.createElement("span"); cell.className="calendar-day";
+    if(!items.length){const cell=document.createElement("span"); cell.className="calendar-day"; cell.dataset.date=date; cell.tabIndex=0; cell.setAttribute("role","button"); cell.setAttribute("aria-label",`${month+1}월 ${day}일 공정 적기`);
 const b=document.createElement("b"); b.textContent=day;
 const noteList=createCalendarNoteList(dayCalendarNotes(date),date); cell.append(b); if(noteList.childElementCount)cell.append(noteList); grid.append(cell); continue;}
     const item=items[0];
-const highlighted=items.find((entry)=>entry.type==="required")||items.find((entry)=>entry.type==="deadline")||item;
-const button=document.createElement("button"); button.type="button"; button.className=`calendar-day has-event ${highlighted.type}`; button.dataset.id=highlighted.id; button.setAttribute("aria-label",`${formatDate(item.date)} ${items.map((entry)=>entry.title).join(", ")}`);
+const startItems=items.filter((entry)=>entry.date===date);
+const highlighted=startItems.find((entry)=>entry.type==="required")||startItems.find((entry)=>entry.type==="deadline")||startItems[0]||item;
+const button=document.createElement("button"); button.type="button"; button.className=`calendar-day has-event ${startItems.length?highlighted.type:"general cont-day"}`; button.dataset.id=highlighted.id; button.dataset.date=date; button.setAttribute("aria-label",`${formatDate(item.date)} ${items.map((entry)=>entry.title).join(", ")}`);
 const b=document.createElement("b"); b.textContent=day;
-const eventList=document.createElement("span"); eventList.className="calendar-event-list"; items.forEach((entry)=>{const label=document.createElement("em"); label.className=entry.type; label.textContent=entry.short||entry.title; label.dataset.eventId=entry.id; label.dataset.eventField="short"; eventList.append(label);});
-const noteList=createCalendarNoteList([...items.flatMap(eventCalendarNotes),...dayCalendarNotes(date)],date);
+const eventList=document.createElement("span"); eventList.className="calendar-event-list"; items.forEach((entry)=>{const label=document.createElement("em"); label.className=entry.type+(entry.date!==date?" cont":""); label.textContent=entry.short||entry.title; label.dataset.eventId=entry.id; label.dataset.eventField="short"; eventList.append(label);});
+const noteList=createCalendarNoteList([...items.filter((entry)=>entry.date===date).flatMap(eventCalendarNotes),...dayCalendarNotes(date)],date);
     button.append(b,eventList); if(noteList.childElementCount)button.append(noteList); button.addEventListener("click",()=>{if(!document.body.classList.contains("inline-edit-mode"))selectCalendarEvent(highlighted);}); grid.append(button);
   }
   const agenda=document.createElement("div"); agenda.className="month-note-agenda";
 const agendaDays=new Map(monthEvents); Object.keys(data.calendarNotes||{}).forEach((noteDate)=>{const parsed=isoDate(noteDate); if(parsed.getFullYear()===year&&parsed.getMonth()===month&&!agendaDays.has(parsed.getDate()))agendaDays.set(parsed.getDate(),[]);});
-  [...agendaDays.entries()].sort((a,b)=>a[0]-b[0]).forEach(([day,items])=>{const date=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`,notes=[...items.flatMap(eventCalendarNotes),...dayCalendarNotes(date)]; if(!notes.length)return;
+  [...agendaDays.entries()].sort((a,b)=>a[0]-b[0]).forEach(([day,items])=>{const date=`${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`,notes=[...items.filter((entry)=>entry.date===date).flatMap(eventCalendarNotes),...dayCalendarNotes(date)]; if(!notes.length)return;
 const article=document.createElement("article"),heading=document.createElement("strong"),body=document.createElement("div"); heading.textContent=`${month+1}월 ${day}일 · ${items.length?items.map((entry)=>entry.short||entry.title).join(" · "):"추가 안내"}`; notes.forEach((entry)=>{const p=document.createElement("p"); p.className=entry.tone; p.textContent=entry.text; if(entry.eventId){p.dataset.eventId=entry.eventId; p.dataset.eventField=entry.eventField;} if(entry.noteDate){p.dataset.calendarNoteDate=entry.noteDate; p.dataset.calendarNoteTone=entry.tone;} body.append(p);}); article.append(heading,body); agenda.append(article);});
   if(agenda.childElementCount)panel.append(agenda);
   return panel;
 }
 function monthRange() {
-  const dates=[data.project.start,data.project.end,...data.schedule.map((item)=>item.date)].filter(Boolean).sort();
-  if(!dates.length)return [];
+  const today=new Date().toISOString().slice(0,10);
+const dates=[data.project.start,data.project.end,...data.schedule.map((item)=>item.date),...data.schedule.map((item)=>item.end)].filter(Boolean).sort();
+  if(!dates.length)dates.push(today);
 let cursor=isoDate(dates[0]); cursor=new Date(cursor.getFullYear(),cursor.getMonth(),1);
 const finish=isoDate(dates.at(-1));
 const months=[];
@@ -1925,7 +1993,7 @@ const months=monthRange();
   if(!months.length){calendarStack.innerHTML='<div class="empty-state"><b>등록된 공사 일정이 없습니다.</b><span>메뉴의 공정 계획에 일정을 넣으면 달력에 바로 표시됩니다.</span></div>';}
   else months.forEach(([year,month])=>calendarStack.append(renderMonth(year,month)));
 const selected=data.schedule.find((item)=>item.id===selectedEventId)||data.schedule[0];
-  if(selected)selectCalendarEvent(selected); else {document.querySelector("#detailDate").textContent=""; document.querySelector("#detailType").textContent=""; document.querySelector("#detailTitle").textContent="등록된 일정 없음"; document.querySelector("#detailText").textContent="메뉴의 공정 계획에 공정 일정을 넣어 주세요."; document.querySelector("#detailPrepare").textContent=""; document.querySelector("#detailDayNotes").innerHTML="";}
+  if(selected)selectCalendarEvent(selected); else {document.querySelector("#detailDate").textContent=""; document.querySelector("#detailType").textContent=""; document.querySelector("#detailTitle").textContent="등록된 일정 없음"; document.querySelector("#detailText").textContent="달력에서 날짜를 누르면 그 날에 공정을 바로 적을 수 있습니다."; document.querySelector("#detailPrepare").textContent=""; document.querySelector("#detailDayNotes").innerHTML="";}
 }
 function renderPrintDetails(){
   const list=document.querySelector("#printDetailList"); list.innerHTML="";
@@ -1970,7 +2038,7 @@ const strong=wrapper.querySelector("strong"),small=wrapper.querySelector("small"
 }
 function loadClosedGroups(){try{return JSON.parse(localStorage.getItem(`${dataStorageKey}-closed`))||[];}catch{return [];}}
 function saveClosedGroups(list){try{localStorage.setItem(`${dataStorageKey}-closed`,JSON.stringify(list));}catch{}}
-function updateNextAction(){if(!data.schedule.length){document.querySelector("#nextActionDate").textContent=""; document.querySelector("#nextActionTitle").textContent="등록된 일정 없음"; document.querySelector("#nextActionDetail").textContent="메뉴의 공정 계획에 첫 공정 일정을 넣어 주세요."; document.querySelector("#countdown").textContent=""; return;} const today=new Date(); today.setHours(0,0,0,0);
+function updateNextAction(){if(!data.schedule.length){document.querySelector("#nextActionDate").textContent=""; document.querySelector("#nextActionTitle").textContent="등록된 일정 없음"; document.querySelector("#nextActionDetail").textContent="달력에서 첫 공정 날짜를 눌러 적어 주세요."; document.querySelector("#countdown").textContent=""; return;} const today=new Date(); today.setHours(0,0,0,0);
 const next=data.schedule.find((item)=>isoDate(item.date)>=today)||data.schedule.at(-1);
 const diff=Math.ceil((isoDate(next.date)-today)/86400000); document.querySelector("#nextActionDate").textContent=shortDate(next.date); document.querySelector("#nextActionTitle").textContent=next.title; document.querySelector("#nextActionDetail").textContent=[next.ruleNote,next.detail].filter(Boolean).join(" · "); document.querySelector("#countdown").textContent=diff>0?`오늘부터 D-${diff}`:diff===0?"오늘 예정된 일정입니다":"전체 예정 일정이 종료되었습니다";}
 function renderGuides(){
@@ -2472,25 +2540,27 @@ function renderScheduleTable(){
   const host=document.querySelector("#planTable"); if(!host)return; host.innerHTML="";
   const wrap=document.createElement("div"); wrap.className="wb-scroll";
   const table=document.createElement("table"); table.className="wb-table wb-plan";
-  table.innerHTML='<thead><tr><th>날짜</th><th class="wide">공정·일정</th><th>구분</th><th class="wide">메모·준비할 것</th><th class="wide">달력 빨간 안내(방문)</th><th class="wide">달력 파란 안내(준비)</th><th class="wb-action-col"><span class="sr-only">삭제</span></th></tr></thead>';
+  table.innerHTML='<thead><tr><th>날짜</th><th>마지막 날</th><th class="wide">공정·일정</th><th>구분</th><th class="wide">메모·준비할 것</th><th class="wide">달력 빨간 안내(방문)</th><th class="wide">달력 파란 안내(준비)</th><th class="wb-action-col"><span class="sr-only">삭제</span></th></tr></thead>';
   const body=document.createElement("tbody");
   const items=[...data.schedule].sort(byDate);
-  if(!items.length){const tr=document.createElement("tr"); tr.className="wb-empty"; tr.innerHTML='<td colspan="7">아직 일정이 없습니다. 아래 \'일정 추가\'를 누르거나, 업체 공정표 사진이 있으면 \'공정표 사진으로 넣기\'를 이용하세요.</td>'; body.append(tr);}
+  if(!items.length){const tr=document.createElement("tr"); tr.className="wb-empty"; tr.innerHTML='<td colspan="8">아직 일정이 없습니다. 메인 달력에서 날짜를 누르거나 아래 \'일정 추가\'를 누르세요. 업체 공정표 사진이 있으면 \'공정표 사진으로 넣기\'를 이용하세요.</td>'; body.append(tr);}
   items.forEach((item)=>{
     const tr=document.createElement("tr");
     const cell=(label,field)=>{const td=document.createElement("td"); td.dataset.label=label; td.append(field); tr.append(td); return td;};
     const date=document.createElement("input"); date.type="date"; date.value=item.date||""; date.setAttribute("aria-label","날짜");
+    const endDate=document.createElement("input"); endDate.type="date"; endDate.value=item.end||""; endDate.setAttribute("aria-label","마지막 날 (하루면 비움)"); endDate.title="여러 날 하는 공정이면 마지막 날을 넣으세요. 하루면 비워 두세요.";
+    const weekend=document.createElement("label"); weekend.className="wb-weekend"; const weekendBox=document.createElement("input"); weekendBox.type="checkbox"; weekendBox.checked=Boolean(item.skipWeekend); weekend.append(weekendBox,document.createTextNode(" 주말 빼기"));
     const title=document.createElement("input"); title.type="text"; title.value=item.title||""; title.placeholder="예: 목공"; title.setAttribute("aria-label","공정·일정");
     const type=document.createElement("select"); [["general","일반 공정"],["required","필수 방문"],["deadline","발주·준비"]].forEach(([v,l])=>{const o=document.createElement("option"); o.value=v; o.textContent=l; type.append(o);}); type.value=item.manualType||item.type||"general"; type.setAttribute("aria-label","구분");
     const memo=document.createElement("input"); memo.type="text"; memo.value=item.prepare||""; memo.placeholder="예: 필름 넘버 전달"; memo.setAttribute("aria-label","메모·준비할 것");
     const red=document.createElement("input"); red.type="text"; red.value=item.visitNote||""; red.placeholder="예: 현장 방문 · 최종 확인"; red.setAttribute("aria-label","달력 빨간 안내");
     const blue=document.createElement("input"); blue.type="text"; blue.value=item.prepNote||""; blue.placeholder="예: 타일 번호 전달"; blue.setAttribute("aria-label","달력 파란 안내");
     [date,title,type,memo,red,blue].forEach((field,index)=>{field.dataset.wbRow=item.id; field.dataset.wbField=["date","title","type","prepare","visitNote","prepNote"][index];});
-    cell("날짜",date); cell("공정·일정",title); const typeCell=cell("구분",type); cell("메모·준비할 것",memo); cell("달력 빨간 안내",red); cell("달력 파란 안내",blue);
+    cell("날짜",date); const endCell=cell("마지막 날",endDate); endCell.append(weekend); weekend.hidden=!item.end; cell("공정·일정",title); const typeCell=cell("구분",type); cell("메모·준비할 것",memo); cell("달력 빨간 안내",red); cell("달력 파란 안내",blue);
     if(item.ruleNote){const note=document.createElement("small"); note.className=`wb-rule ${item.type}`; note.textContent=item.ruleNote; typeCell.append(note);}
-    const commit=()=>{item.date=date.value; item.title=title.value.trim(); item.short=item.title.slice(0,8); item.manualType=type.value; item.type=type.value; item.prepare=memo.value.trim(); item.visitNote=red.value.trim(); item.prepNote=blue.value.trim(); item.autoDetail=false;
+    const commit=()=>{item.date=date.value; item.end=endDate.value&&endDate.value>date.value?endDate.value:""; item.skipWeekend=Boolean(item.end&&weekendBox.checked); item.title=title.value.trim(); item.short=item.title.slice(0,8); item.manualType=type.value; item.type=type.value; item.prepare=memo.value.trim(); item.visitNote=red.value.trim(); item.prepNote=blue.value.trim(); item.autoDetail=false;
       if(!item.date||!item.title)return; persistData(); rerenderKeepingFocus();};
-    [date,type].forEach((field)=>field.addEventListener("change",commit)); [title,memo,red,blue].forEach((field)=>field.addEventListener("change",commit));
+    [date,type,endDate,weekendBox].forEach((field)=>field.addEventListener("change",commit)); [title,memo,red,blue].forEach((field)=>field.addEventListener("change",commit));
     const action=document.createElement("td"); action.className="wb-action-col"; const remove=document.createElement("button"); remove.type="button"; remove.className="wb-remove"; remove.textContent="×"; remove.setAttribute("aria-label","이 일정 삭제");
     remove.addEventListener("click",()=>{if(!confirm(`'${item.title||"이"}' 일정을 삭제할까요?`))return; data.schedule=data.schedule.filter((entry)=>entry.id!==item.id); persistData(); renderAll();});
     action.append(remove); tr.append(action); body.append(tr);
@@ -2675,6 +2745,101 @@ document.querySelectorAll("#guide .ag-item").forEach((item)=>{
   item.querySelector(".ag-body")?.prepend(bar);
 });
 document.querySelector("#guide .ag-print-all")?.addEventListener("click",()=>printGuidePart(null));
+
+/* ===== 달력에서 바로 공정 적기 (대표 11/11) ===== */
+(function calendarQuickAdd(){
+  const stack=document.querySelector("#calendarStack"); if(!stack)return;
+  const hint=document.createElement("p"); hint.className="cal-add-hint"; hint.textContent="달력의 날짜를 누르면 그 날에 공정을 바로 적을 수 있습니다. 적은 일정은 공정 계획에도 함께 들어갑니다.";
+  stack.before(hint);
+  const sheet=document.createElement("div"); sheet.className="cal-sheet"; sheet.hidden=true;
+  sheet.innerHTML=`<div class="cal-sheet-dim" data-close></div>
+  <section class="cal-sheet-box" role="dialog" aria-modal="true" aria-labelledby="calSheetTitle">
+    <header><h3 id="calSheetTitle"></h3><button type="button" class="cal-sheet-x" data-close aria-label="닫기">×</button></header>
+    <div class="cal-sheet-list"></div>
+    <form class="cal-sheet-form">
+      <p class="cal-sheet-mode">이 날에 공정 추가</p>
+      <label>공정 이름<input name="title" type="text" placeholder="예: 목공" autocomplete="off" required /></label>
+      <div class="cal-sheet-type" role="radiogroup" aria-label="구분">
+        <label><input type="radio" name="type" value="general" checked /><span>일반 공정</span></label>
+        <label><input type="radio" name="type" value="required" /><span>필수 방문</span></label>
+        <label><input type="radio" name="type" value="deadline" /><span>발주·준비</span></label>
+      </div>
+      <div class="cal-sheet-dates">
+        <label>시작일<input name="date" type="date" required /></label>
+        <label>마지막 날<input name="end" type="date" /></label>
+      </div>
+      <div class="cal-sheet-quick" aria-label="기간 빠르게 넣기">
+        <button type="button" data-days="1">하루</button><button type="button" data-days="3">3일</button><button type="button" data-days="7">1주</button><button type="button" data-days="14">2주</button>
+        <label class="cal-sheet-weekend"><input name="skipWeekend" type="checkbox" /> 주말 빼기</label>
+      </div>
+      <p class="cal-sheet-range"></p>
+      <label>메모·준비할 것<input name="prepare" type="text" placeholder="예: 필름 넘버 전달" autocomplete="off" /></label>
+      <div class="cal-sheet-actions"><button type="button" class="cal-sheet-cancel" data-close>닫기</button><button type="submit" class="cal-sheet-save">달력에 넣기</button></div>
+    </form>
+  </section>`;
+  document.body.append(sheet);
+  const form=sheet.querySelector("form"), list=sheet.querySelector(".cal-sheet-list"), titleEl=sheet.querySelector("#calSheetTitle"), modeEl=sheet.querySelector(".cal-sheet-mode"), rangeEl=sheet.querySelector(".cal-sheet-range"), saveBtn=sheet.querySelector(".cal-sheet-save");
+  let currentDate="", editingId=null, lastFocus=null;
+  const addDays=(iso,n)=>{const d=isoDate(iso); d.setDate(d.getDate()+n); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;};
+  const dayTitle=(iso)=>{const d=isoDate(iso); return `${d.getMonth()+1}월 ${d.getDate()}일 (${"일월화수목금토"[d.getDay()]})`;};
+  const draft=()=>({date:form.date.value,end:form.end.value&&form.end.value>form.date.value?form.end.value:"",skipWeekend:form.skipWeekend.checked});
+  const showRange=()=>{const d=draft(); form.querySelector(".cal-sheet-weekend").hidden=!d.end; rangeEl.textContent=d.date&&d.end?`${scheduleRangeText({...d,skipWeekend:d.skipWeekend})} 동안 달력에 표시됩니다.`:"";};
+  const fill=(item)=>{
+    editingId=item?.id||null;
+    form.title.value=item?.title||""; form.prepare.value=item?.prepare||"";
+    form.date.value=item?.date||currentDate; form.end.value=item?.end||""; form.skipWeekend.checked=Boolean(item?.skipWeekend);
+    const type=item?.manualType||item?.type||"general"; form.querySelectorAll('input[name="type"]').forEach((r)=>{r.checked=r.value===type;});
+    modeEl.textContent=item?`'${item.title}' 고치기`:"이 날에 공정 추가"; saveBtn.textContent=item?"고쳐서 저장":"달력에 넣기";
+    showRange();
+  };
+  const renderList=()=>{
+    list.innerHTML="";
+    const items=data.schedule.filter((item)=>scheduleOccurs(item).some((d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`===currentDate));
+    if(!items.length)return;
+    const head=document.createElement("p"); head.className="cal-sheet-mode"; head.textContent="이 날의 일정"; list.append(head);
+    items.forEach((item)=>{
+      const row=document.createElement("div"); row.className=`cal-sheet-item ${item.type}`;
+      const text=document.createElement("div"); const b=document.createElement("b"); b.textContent=item.title; const s=document.createElement("small"); s.textContent=[scheduleRangeText(item),item.prepare].filter(Boolean).join(" · "); text.append(b,s);
+      const edit=document.createElement("button"); edit.type="button"; edit.textContent="고치기"; edit.addEventListener("click",()=>{fill(item); form.title.focus();});
+      const del=document.createElement("button"); del.type="button"; del.className="danger"; del.textContent="삭제"; del.addEventListener("click",()=>{if(!confirm(`'${item.title}' 일정을 삭제할까요?`))return; data.schedule=data.schedule.filter((entry)=>entry.id!==item.id); persistData(); renderAll(); if(editingId===item.id)fill(null); renderList();});
+      row.append(text,edit,del); list.append(row);
+    });
+  };
+  const open=(date)=>{
+    currentDate=date; lastFocus=document.activeElement; titleEl.textContent=dayTitle(date);
+    fill(null); renderList(); sheet.hidden=false; document.body.classList.add("cal-sheet-open");
+    setTimeout(()=>form.title.focus(),30);
+  };
+  const close=()=>{sheet.hidden=true; document.body.classList.remove("cal-sheet-open"); lastFocus?.focus?.({preventScroll:true});};
+  sheet.querySelectorAll("[data-close]").forEach((el)=>el.addEventListener("click",close));
+  document.addEventListener("keydown",(event)=>{if(event.key==="Escape"&&!sheet.hidden)close();});
+  sheet.querySelectorAll(".cal-sheet-quick [data-days]").forEach((button)=>button.addEventListener("click",()=>{
+    if(!form.date.value)form.date.value=currentDate; const n=Number(button.dataset.days);
+    if(n<=1){form.end.value=""; form.skipWeekend.checked=false; showRange(); return;}
+    form.end.value=addDays(form.date.value,n-1);
+    showRange();
+  }));
+  [form.date,form.end,form.skipWeekend].forEach((field)=>field.addEventListener("change",showRange));
+  form.addEventListener("submit",(event)=>{
+    event.preventDefault();
+    const title=form.title.value.trim(); if(!title){form.title.focus(); return;}
+    if(!form.date.value){form.date.focus(); return;}
+    const type=form.querySelector('input[name="type"]:checked')?.value||"general", d=draft();
+    const existing=data.schedule.find((item)=>item.id===editingId);
+    const item=existing||{id:makeId(),detail:"",visitNote:"",prepNote:"",autoDetail:false};
+    Object.assign(item,{date:d.date,end:d.end,skipWeekend:Boolean(d.end&&d.skipWeekend),title,short:title.slice(0,8),type,manualType:type,prepare:form.prepare.value.trim()});
+    if(!existing)data.schedule.push(item);
+    selectedEventId=item.id; persistData(); renderAll(); close();
+  });
+  const pick=(event)=>{
+    if(document.body.classList.contains("inline-edit-mode"))return;
+    const cell=event.target.closest(".calendar-day[data-date]"); if(!cell||!stack.contains(cell))return;
+    if(event.type==="keydown"){if(event.key!=="Enter"&&event.key!==" ")return; if(cell.tagName==="BUTTON")return; event.preventDefault();}
+    open(cell.dataset.date);
+  };
+  stack.addEventListener("click",pick); stack.addEventListener("keydown",pick);
+  window.arcOpenCalendarDay=open;
+})();
 
 renderAll();
 })();
