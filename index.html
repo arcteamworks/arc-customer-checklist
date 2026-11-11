@@ -1395,6 +1395,135 @@ body.cal-sheet-open { overflow:hidden; }
 .open-notice.compact span.resume-short { color:var(--muted); font-size:.82rem; }
 .open-notice.compact .secondary-button { min-height:36px; padding:6px 14px; font-size:.82rem; }
 .open-notice.compact .open-notice-close { top:50%; transform:translateY(-50%); }
+/* ===== 11/12 1단계: 금액 읽은 값 · 인쇄 글 사본 · 견적 범위 확인 전 · 휴대폰 글자·누르는 자리 ===== */
+.money-read { display:block; padding:2px 8px 0; color:var(--sage-dark); font-size:.72rem; font-weight:700; line-height:1.35; }
+.money-read:empty { display:none; }
+.money-read.bad { color:var(--clay); }
+.money-read.warn { color:#b26a00; }
+.write-grid .money-read { padding:0; }
+.wb-unread { grid-column:1/-1; margin:0; padding:8px 12px; border:1px solid var(--clay); background:var(--clay-pale); color:var(--clay); font-size:.82rem; font-weight:800; }
+.quote-summary .quote-check { margin:0 0 8px 12px; color:var(--muted); font-size:.8rem; }
+.wb-table textarea { width:100%; min-width:140px; min-height:36px; padding:6px 8px; border:1px solid transparent; background:transparent; color:var(--ink); font:inherit; resize:vertical; }
+.wb-table textarea:hover { border-color:var(--line); background:#fbfaf6; }
+.wb-table textarea:focus { outline:2px solid var(--sage); outline-offset:-1px; border-color:var(--sage); }
+.print-mirror { display:none; }
+@media print {
+  .has-mirror { display:none !important; }
+  .print-mirror { display:block !important; min-height:1.2em; padding:1mm 0; white-space:pre-wrap; overflow-wrap:anywhere; word-break:normal; color:#1d1d1f; font-size:inherit; line-height:1.45; }
+  .write-grid .print-mirror { padding:1.5mm 2mm; border:1px solid #d2d2d7; font-size:9.5pt; }
+  .wb-questions + .print-mirror { padding:2mm 3mm; border:1px solid #d2d2d7; font-size:10pt; }
+  .wb-table .print-mirror { font-size:7.5pt; }
+  .money-read { padding:0; font-size:7pt; }
+}
+@media screen and (max-width:760px) {
+  input, select, textarea { font-size:16px !important; }
+  .wb-remove { width:44px; height:44px; margin-top:0; }
+  .check-remove { min-width:44px; min-height:44px; top:2px; padding:0 6px; }
+  .check-item:has(.check-remove) .check-copy { padding-right:52px; }
+  .guide-section label.ag-check { min-height:44px; align-items:center; }
+  .guide-section .ag-input { flex-basis:22px; width:22px; height:22px; margin:0; }
+  .guide-section .ag-table td .ag-input { width:26px; height:26px; }
+  .guide-section .ag-table td:has(.ag-input) { min-width:44px; height:44px; }
+}
+/* ===== 11/12 대표 승인: 공정별 공사계획 · 타업체 견적 펼침 · 공정 내역서 PDF · 보내기 확인 체크 ===== */
+.works-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; align-items:start; }
+.works-card { min-width:0; display:flex; flex-direction:column; gap:12px; padding:20px 22px; border-radius:16px; background:#fff; border:1px solid var(--line); }
+.works-card header { display:flex; align-items:center; gap:10px; }
+.works-num { flex:0 0 auto; color:var(--muted); font-size:.78rem; font-weight:700; letter-spacing:.02em; }
+.works-trade { flex:1 1 0; width:0; min-width:0; padding:4px 6px; margin-left:-6px; border:1px solid transparent; border-radius:8px; background:transparent; color:var(--ink); font:inherit; font-size:1.05rem; font-weight:700; letter-spacing:-.01em; }
+.works-trade:hover { border-color:var(--line); }
+.works-trade:focus { outline:2px solid var(--point); outline-offset:-1px; }
+.works-skip { flex:0 0 auto; display:flex; align-items:center; gap:6px; color:var(--muted); font-size:.82rem; font-weight:600; cursor:pointer; white-space:nowrap; }
+.works-skip input { width:18px; height:18px; margin:0; accent-color:var(--ink); }
+.works-body { display:flex; flex-direction:column; gap:12px; }
+.works-body[hidden] { display:none; }
+.works-want, .works-money { display:flex; flex-direction:column; gap:6px; }
+.works-want > span, .works-money > span { color:var(--muted); font-size:.78rem; font-weight:700; }
+.works-want textarea { width:100%; min-height:104px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); font:inherit; line-height:1.55; resize:vertical; }
+.works-money input { width:100%; max-width:260px; padding:10px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; color:var(--ink); font:inherit; }
+.works-want textarea:focus, .works-money input:focus { outline:2px solid var(--point); outline-offset:-1px; border-color:var(--point); }
+.works-money .money-read { padding:0 2px; }
+.works-pdf { align-self:flex-start; min-height:38px; padding:8px 16px; font-size:.85rem; }
+.works-card.skip { padding:12px 22px; background:transparent; border-style:dashed; }
+.works-card.skip .works-trade { color:var(--muted); text-decoration:line-through; }
+.works-actions { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-top:18px; }
+.works-actions .wb-add { margin:0; }
+.works-note { margin:12px 0 0; color:var(--muted); font-size:.8rem; line-height:1.55; }
+.works-summary .kpi-link { cursor:pointer; }
+.wb-table tr.wb-skip td { opacity:.45; }
+@media screen and (min-width:761px) { .wb-budgets tfoot td { text-align:left; padding-left:16px; } }
+/* 타업체 견적: 칸 누르면 그 자리에서 펼침 */
+.wb-others-toggle { display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; min-width:150px; min-height:36px; padding:6px 10px; border:1px solid var(--line); border-radius:10px; background:#fff; color:var(--ink); font:inherit; font-size:.85rem; text-align:left; cursor:pointer; }
+.wb-others-toggle:hover { border-color:var(--ink); }
+.wb-others-toggle i { flex:0 0 auto; width:7px; height:7px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; transform:rotate(45deg) translateY(-2px); transition:transform .15s; }
+.wb-others-toggle[aria-expanded="true"] { border-color:var(--ink); background:var(--band); }
+.wb-others-toggle[aria-expanded="true"] i { transform:rotate(-135deg) translateY(-2px); }
+.wb-others-row[hidden] { display:none; }
+.wb-others-row > td { padding:0 !important; background:var(--band); }
+.wb-others { padding:14px 16px 16px; }
+.wb-others-title { margin:0 0 10px; font-size:.82rem; font-weight:700; color:var(--ink); }
+.wb-others-list { display:flex; flex-direction:column; gap:8px; }
+.wb-other { display:grid; grid-template-columns:minmax(120px,1fr) minmax(180px,2fr) minmax(120px,1fr) minmax(100px,.8fr) 36px; gap:8px; align-items:start; padding:10px; border-radius:12px; background:#fff; }
+.wb-other label { display:flex; flex-direction:column; gap:4px; min-width:0; }
+.wb-other label > span { color:var(--muted); font-size:.7rem; font-weight:700; }
+.wb-other input, .wb-other select, .wb-other textarea { width:100%; min-width:0; padding:7px 9px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); font:inherit; font-size:.85rem; }
+.wb-other textarea { min-height:36px; resize:vertical; }
+.wb-other .money-read { padding:0; }
+.wb-other .wb-remove { align-self:center; margin-top:16px; }
+.others-hint { font-size:inherit; color:var(--muted); }
+.wb-others-empty { margin:0; color:var(--muted); font-size:.82rem; }
+.wb-others-actions { display:flex; gap:8px; margin-top:10px; }
+/* 보내기 확인 체크 */
+.send-confirm { display:flex; align-items:flex-start; gap:10px; margin:0 0 14px; padding:14px 16px; border-radius:14px; background:var(--band); font-size:.92rem; font-weight:600; line-height:1.5; cursor:pointer; }
+.send-confirm input { flex:0 0 auto; width:20px; height:20px; margin:1px 0 0; accent-color:var(--ink); }
+#sendPrintButton[aria-disabled="true"] { background:#c7c7cc; cursor:not-allowed; }
+.send-gate { margin:8px 0 0; color:var(--clay); font-size:.85rem; font-weight:700; }
+.send-gate[hidden] { display:none; }
+.scope-sheet, .submit-works { display:none; }
+@media screen and (max-width:760px) {
+  .works-grid { grid-template-columns:minmax(0,1fr); }
+  .works-card { padding:16px; }
+  .works-money input { max-width:none; }
+  .works-actions { flex-direction:column; align-items:stretch; }
+  .works-actions .primary-button { width:100%; }
+  .wb-other { grid-template-columns:1fr 1fr; }
+  .wb-other .wb-other-scope { grid-column:1/-1; }
+  .wb-other .wb-remove { grid-column:2; justify-self:end; margin-top:0; }
+  .send-confirm { font-size:1rem; }
+  .wb-others-toggle { min-width:0; }
+  .wb-table tfoot td[data-sum="diag"]::before { content:"진단 금액"; }
+  .wb-table tfoot td[data-sum="crew"]::before { content:"ARC CREW 견적"; }
+  .wb-table tfoot td[data-sum="contract"]::before { content:"최종 계약 금액"; }
+}
+@media print {
+  /* 공정 내역서: 금액 없이 내역서만 */
+  body.print-scope > *:not(#scopeSheet) { display:none !important; }
+  body.print-scope .scope-sheet { display:block !important; color:#1d1d1f; font-size:10.5pt; }
+  .scope-sheet h1 { margin:0 0 4mm; padding-bottom:4mm; border-bottom:2px solid #1d1d1f; font-size:18pt; }
+  .scope-sheet dl { display:grid; grid-template-columns:repeat(2,1fr); gap:2mm 8mm; margin:0 0 4mm; }
+  .scope-sheet dl div { display:flex; gap:3mm; }
+  .scope-sheet dt { min-width:16mm; color:#6e6e73; font-size:9pt; }
+  .scope-sheet dd { margin:0; font-weight:700; }
+  .scope-sheet .scope-note { margin:0 0 6mm; color:#6e6e73; font-size:9pt; }
+  .scope-sheet section { margin:0 0 5mm; padding:3mm 0 0; border-top:1px solid #d2d2d7; break-inside:avoid; }
+  .scope-sheet h2 { margin:0 0 2mm; font-size:12pt; }
+  .scope-sheet section p { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; line-height:1.6; }
+  /* ARC에 보내는 PDF: 공정별 공사계획 표로 시작 */
+  body.print-submit .submit-works { display:block !important; margin:6mm 0 0; }
+  body.print-submit .submit-works h2 { margin:0 0 3mm; font-size:13pt; }
+  .submit-works-table { width:100%; border-collapse:collapse; font-size:9pt; }
+  .submit-works-table th, .submit-works-table td { padding:1.6mm 2mm; border:1px solid #d2d2d7; text-align:left; vertical-align:top; white-space:pre-wrap; overflow-wrap:anywhere; }
+  .submit-works-table th { background:#f5f5f7; }
+  .submit-works-table th:first-child, .submit-works-table td:first-child { width:22%; }
+  .submit-works-table th:last-child, .submit-works-table td:last-child { width:20%; }
+  .submit-works-table tfoot td { font-weight:700; }
+  .submit-works-skip { margin:2mm 0 0; color:#6e6e73; font-size:8.5pt; }
+  body.print-submit #tab-works, body.print-submit .send-confirm, body.print-submit .send-gate, body.print-submit .wb-others-actions, body.print-submit .wb-others-toggle i { display:none !important; }
+  body.print-submit .wb-others-row:not(.is-empty) { display:table-row !important; }
+  body.print-submit .wb-others-toggle { border:0; padding:0; min-height:0; background:none; font-size:7.5pt; }
+  body.print-submit .wb-other { grid-template-columns:1fr 2fr 1fr 1fr; padding:1mm; gap:1mm; }
+  body.print-submit .wb-other .wb-remove, body.print-submit .others-hint { display:none !important; }
+}
 </style>
 </head>
 <body>
@@ -1407,17 +1536,18 @@ body.cal-sheet-open { overflow:hidden; }
     <button class="gnav-burger" id="gnavBurger" type="button" aria-expanded="false" aria-controls="tabNav"><span></span><span></span><b class="sr-only">메뉴 열기</b></button>
     <nav class="gnav" id="tabNav" aria-label="ARC 고객 체크리스트 메뉴">
       <button class="gnav-link" type="button" data-tab="tab-visit">홈</button>
-      <button class="gnav-link" type="button" data-tab="tab-info">내 현장 정보</button>
-      <button class="gnav-link" type="button" data-tab="tab-plan">공정 계획</button>
+      <button class="gnav-link" type="button" data-tab="tab-info">현장 정보</button>
+      <button class="gnav-link" type="button" data-tab="tab-plan">공사 일정</button>
       <div class="gnav-group">
         <button class="gnav-link gnav-toggle" type="button" aria-expanded="false">예산·견적</button>
         <div class="gnav-flyout"><div class="gnav-flyout-inner">
           <p class="gnav-flyout-title">예산·견적</p>
-          <button type="button" data-tab="tab-budget"><strong>예산 관리</strong><small>공정별 예산과 남은 금액</small></button>
+          <button type="button" data-tab="tab-budget"><strong>예산 관리</strong><small>진단 금액·견적·계약 금액 정리</small></button>
           <button type="button" data-tab="tab-quotes"><strong>업체 견적 비교</strong><small>받은 견적을 부가세 맞춰 비교</small></button>
           <button type="button" data-tab="tab-materials"><strong>자재 사양·견적</strong><small>고른 자재와 가격 정리</small></button>
         </div></div>
       </div>
+      <button class="gnav-link" type="button" data-tab="tab-works">공정별 공사계획</button>
       <button class="gnav-link" type="button" data-tab="tab-guide">반셀프 가이드</button>
       <button class="gnav-link" type="button" data-tab="tab-send">ARC에 보내기</button>
       <button class="gnav-link" type="button" id="printButton">인쇄</button>
@@ -1562,7 +1692,7 @@ body.cal-sheet-open { overflow:hidden; }
   <div class="ocr-backdrop" id="ocrBackdrop" hidden=""></div>
 
   <main id="top">
-    <div class="submit-head" id="submitHead" aria-hidden="true"><p class="submit-badge">고객 작성본</p><h1>ARC 고객 체크리스트</h1><dl><div><dt>고객</dt><dd id="submitCustomer">-</dd></div><div><dt>현장</dt><dd id="submitHome">-</dd></div><div><dt>작성일</dt><dd id="submitDate">-</dd></div></dl><p class="submit-note">이 문서는 고객님이 직접 작성해 ARC에 보낸 내용입니다. 공사 범위·업체·금액의 결정은 고객님께 있습니다.</p></div>
+    <div class="submit-head" id="submitHead" aria-hidden="true"><p class="submit-badge">고객 작성본</p><h1>ARC 고객 체크리스트</h1><dl><div><dt>고객</dt><dd id="submitCustomer">-</dd></div><div><dt>현장</dt><dd id="submitHome">-</dd></div><div><dt>작성일</dt><dd id="submitDate">-</dd></div></dl><p class="submit-note">이 문서는 고객님이 직접 작성해 ARC에 보낸 내용입니다. 공사 범위·업체·금액의 결정은 고객님께 있습니다.</p><div class="submit-works" id="submitWorks"></div></div>
     <noscript><div class="noscript-note"><strong>이 화면에서는 체크리스트가 열리지 않습니다.</strong><p>아이폰의 카카오톡·파일 미리보기는 이 파일의 기능을 실행하지 않아 빈 화면으로 보입니다. PC나 갤럭시 폰에서 열어 주시거나, ARC에서 보내 드리는 주소로 열어 주세요.</p></div></noscript>
     <div class="open-notice" id="kakaoNotice" hidden="">
       <strong>카카오톡 안에서 열려 있습니다</strong>
@@ -1587,10 +1717,10 @@ body.cal-sheet-open { overflow:hidden; }
         </div>
       </div>
       <div class="kpi-grid">
-        <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>평형·유형</span><strong id="kpiArea">미입력</strong><small id="kpiAreaNote">내 현장 정보에서 입력</small></article>
+        <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>평형·유형</span><strong id="kpiArea">미입력</strong><small id="kpiAreaNote">현장 정보에서 입력</small></article>
         <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>총예산</span><strong id="kpiBudget">미입력</strong><small id="kpiBudgetNote">예비비 포함 여부 미정</small></article>
         <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>공사 기간</span><strong id="kpiPeriod">미입력</strong><small id="kpiPeriodNote">시작·종료 희망일</small></article>
-        <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>입주 희망일</span><strong id="kpiMoveIn">미입력</strong><small id="kpiMoveInNote"></small></article>
+        <article class="kpi-link" data-goto="tab-info" role="button" tabindex="0" title="눌러서 입력·수정"><span>입주 예정일</span><strong id="kpiMoveIn">미입력</strong><small id="kpiMoveInNote"></small></article>
       </div>
     </section>
 
@@ -1606,14 +1736,14 @@ body.cal-sheet-open { overflow:hidden; }
           <span id="projectHome"></span>
           <span id="projectPeriod"></span>
         </div>
-        <p class="customer-hint" data-copy-key="hero.customerHint">달력과 체크리스트로 준비할 일을 확인하시고, 위 메뉴의 내 현장 정보부터 차례로 적어 ARC에 보내 주세요.</p>
-        <p class="edit-hint" data-copy-key="hero.editHint"><b>공정 계획</b>이나 달력에서 일정을 적고, 필요하면 <b>도구 → 고객용 파일 저장</b>으로 파일을 만듭니다.</p>
+        <p class="customer-hint" data-copy-key="hero.customerHint">달력과 체크리스트로 준비할 일을 확인하시고, 위 메뉴의 현장 정보부터 차례로 적어 ARC에 보내 주세요.</p>
+        <p class="edit-hint" data-copy-key="hero.editHint"><b>공사 일정</b>이나 달력에서 일정을 적고, 필요하면 <b>도구 → 고객용 파일 저장</b>으로 파일을 만듭니다.</p>
       </div>
       <aside class="next-action" aria-labelledby="next-action-title">
         <p class="eyebrow" id="next-action-title" data-copy-key="next.eyebrow">NEXT ACTION</p>
         <div class="next-action-date" id="nextActionDate"></div>
         <h2 id="nextActionTitle">등록된 일정 없음</h2>
-        <p id="nextActionDetail">메뉴의 공정 계획에 첫 공정 일정을 넣어 주세요.</p>
+        <p id="nextActionDetail">메뉴의 공사 일정에 첫 공정 일정을 넣어 주세요.</p>
         <div class="countdown" id="countdown"></div>
       </aside>
     </section>
@@ -1658,7 +1788,7 @@ body.cal-sheet-open { overflow:hidden; }
         </div>
         <div>
           <div class="detail-heading"><span class="detail-type" id="detailType"></span><h3 id="detailTitle">등록된 일정 없음</h3></div>
-          <p id="detailText">메뉴의 공정 계획에 공정 일정을 넣어 주세요.</p>
+          <p id="detailText">메뉴의 공사 일정에 공정 일정을 넣어 주세요.</p>
           <div class="detail-prepare"><b data-copy-key="detail.prepareLabel">준비</b><span id="detailPrepare"></span></div>
           <div class="detail-day-notes" id="detailDayNotes"></div>
         </div>
@@ -1706,9 +1836,9 @@ body.cal-sheet-open { overflow:hidden; }
     </section>
     </section>
 
-    <section class="tab-panel" id="tab-info" aria-label="내 현장 정보">
+    <section class="tab-panel" id="tab-info" aria-label="현장 정보">
       <article class="write-card" id="myinfo">
-        <header><div><h2>내 현장 정보</h2><p>현장명과 평형은 직접 적어 주세요. 맨 위 제목과 카드에 같이 표시됩니다. 모르는 칸은 비워 두셔도 됩니다.</p></div></header>
+        <header><div><h2>현장 정보</h2><p>현장명과 평형은 직접 적어 주세요. 맨 위 제목과 카드에 같이 표시됩니다. 모르는 칸은 비워 두셔도 됩니다.</p></div></header>
         <div class="write-grid">
           <label>고객명<input data-project-field="customer" type="text" placeholder="예: 홍길동"></label>
           <label>현장명·주소<input data-project-field="home" type="text" placeholder="예: ○○아파트 101동 1203호"></label>
@@ -1716,17 +1846,17 @@ body.cal-sheet-open { overflow:hidden; }
           <label>가족 구성·생활 방식<input data-project-field="household" type="text" placeholder="예: 부부+초등 자녀 1, 재택근무"></label>
           <label>공사 시작 희망일<input data-project-field="start" type="date"></label>
           <label>공사 종료(입주 전) 희망일<input data-project-field="end" type="date"></label>
-          <label>입주 희망일<input data-project-field="moveIn" type="date"></label>
+          <label>입주 예정일<input data-project-field="moveIn" type="date"></label>
           <label>총예산(원)<input data-project-field="budget" type="text" placeholder="예: 6000만 또는 60,000,000"></label>
           <label>총예산에 예비비 포함?<select data-project-field="reserve"><option>미정</option><option>포함</option><option>별도</option></select></label>
-          <label class="wide">꼭 지키고 싶은 것·걱정되는 것<textarea data-project-field="memo" rows="3" placeholder="예: 주방은 꼭 넓게, 아이 방 소음이 걱정됩니다"></textarea></label>
+          <label class="wide">가장 중요하게 생각하는 것<textarea data-project-field="memo" rows="3" placeholder="예) 수납 공간, 아이 방 안전, 거실 개방감"></textarea></label>
         </div>
       </article>
     </section>
 
-    <section class="tab-panel" id="tab-plan" aria-label="공정 계획">
+    <section class="tab-panel" id="tab-plan" aria-label="공사 일정">
       <article class="write-card" id="myplan">
-        <header><div><h2>공정 계획</h2><p>생각하신 공정 순서와 날짜를 적어 주세요. 적은 일정은 <a href="#tab-visit" data-goto="tab-visit">홈</a>의 공정 달력에 바로 표시되고, 꼭 가야 하는 날과 발주할 날짜가 자동으로 잡힙니다. 철거·목공·타일 같은 공정은 첫 시공일에 ‘현장 방문 필수’가 자동으로 붙고, 발주·실측처럼 준비하는 날은 구분을 ‘발주·준비’로 고르거나 이름에 ‘발주’·‘실측’을 넣으면 붙지 않습니다.</p></div></header>
+        <header><div><h2>공사 일정</h2><p>생각하신 공정 순서와 날짜를 적어 주세요. 적은 일정은 <a href="#tab-visit" data-goto="tab-visit">홈</a>의 공정 달력에 바로 표시되고, 꼭 가야 하는 날과 발주할 날짜가 자동으로 잡힙니다. 철거·목공·타일 같은 공정은 첫 시공일에 ‘현장 방문 필수’가 자동으로 붙고, 발주·실측처럼 준비하는 날은 구분을 ‘발주·준비’로 고르거나 이름에 ‘발주’·‘실측’을 넣으면 붙지 않습니다.</p></div></header>
         <div id="planTable"></div>
       </article>
       <article class="write-card admin-only" id="plannerEdit">
@@ -1740,7 +1870,7 @@ body.cal-sheet-open { overflow:hidden; }
 
     <section class="tab-panel" id="tab-budget" aria-label="예산 관리">
       <article class="write-card" id="mybudget">
-        <header><div><h2>예산 관리</h2><p>공정별로 생각하신 예산을 적어 주세요. 견적을 받았거나 계약했다면 그 금액도 적으면 차이가 자동으로 계산됩니다. 금액은 60,000,000처럼 숫자로 적어도 되고, 6000만·2억 3천만처럼 한글로 적어도 됩니다.</p></div></header>
+        <header><div><h2>예산 관리</h2><p>ARC 진단을 받은 뒤 진단 금액과 받은 견적, 최종 계약 금액을 적어 주세요. 처음 정하신 공정별 예산은 <a href="#tab-works" data-goto="tab-works">공정별 공사계획</a>에 그대로 남습니다. 타업체 견적은 칸을 누르면 펼쳐서 업체별로 적을 수 있습니다. 금액은 60,000,000처럼 숫자로 적어도 되고, 6000만·2억 3천만처럼 한글로 적어도 됩니다.</p></div></header>
         <div class="wb-summary" id="budgetSummary"></div>
         <div data-wb-table="budgets"></div>
       </article>
@@ -1748,7 +1878,7 @@ body.cal-sheet-open { overflow:hidden; }
 
     <section class="tab-panel" id="tab-quotes" aria-label="업체 견적 비교">
       <article class="write-card" id="myquotes">
-        <header><div><h2>업체 견적 비교</h2><p>다른 업체에서 받은 견적을 한 줄에 하나씩 적어 주세요. 같은 공종 이름으로 적으면 부가세를 맞춰 최저·최고 금액을 비교해 드립니다. 견적서 파일은 보낼 때 카카오톡으로 함께 보내 주세요.</p></div></header>
+        <header><div><h2>업체 견적 비교</h2><p>다른 업체에서 받은 견적을 한 줄에 하나씩 적어 주세요. 범위가 같은지 먼저 맞춰 보세요. 같은 범위끼리만 금액을 나란히 보여 드립니다(부가세 맞춤). 견적서 파일은 보낼 때 카카오톡으로 함께 보내 주세요.</p></div></header>
         <div class="quote-summary" id="quoteSummary" hidden=""></div>
         <div data-wb-table="quotes"></div>
       </article>
@@ -1756,9 +1886,22 @@ body.cal-sheet-open { overflow:hidden; }
 
     <section class="tab-panel" id="tab-materials" aria-label="자재 사양·견적">
       <article class="write-card" id="mymaterials">
-        <header><div><h2>자재 사양·견적</h2><p>마음에 둔 자재·제품(타일, 수전, 조명, 마루 등)을 적어 주세요. 결정 상태를 표시해 두면 발주 일정을 함께 확인할 수 있습니다.</p></div></header>
+        <header><div><h2>자재 사양·견적</h2><p>마음에 둔 자재·제품(타일, 수전, 조명, 마루 등)을 적어 주세요. 타업체 견적은 칸을 누르면 펼쳐서 업체별로 적을 수 있습니다. 발주일·도착일을 적어 두면 공사 일정과 맞춰 보기 쉽습니다.</p></div></header>
         <p class="wb-note" id="materialSummary"></p>
         <div data-wb-table="materials"></div>
+      </article>
+    </section>
+
+    <section class="tab-panel" id="tab-works" aria-label="공정별 공사계획">
+      <article class="write-card" id="myworks">
+        <header><div><h2>공정별 공사계획</h2><p>공정마다 하고 싶은 것과 쓸 예산을 직접 정해서 적어 주세요.<br>ARC는 이 계획을 보고 진단해 드립니다.</p></div></header>
+        <div class="wb-summary works-summary" id="worksSummary"></div>
+        <div class="works-grid" id="worksGrid"></div>
+        <div class="works-actions">
+          <button type="button" class="small-button wb-add" id="worksAdd">+ 공정 추가</button>
+          <button type="button" class="primary-button" id="worksPdfAll">전체 공정 내역서 PDF</button>
+        </div>
+        <p class="works-note">공정 내역서 PDF에는 고객님 이름·현장·평형·공사 기간과 공정별 하고 싶은 것만 들어가고, 금액은 들어가지 않습니다. 다른 업체에 견적을 받으실 때 그대로 보여 주시면 됩니다.</p>
       </article>
     </section>
 
@@ -1777,11 +1920,13 @@ body.cal-sheet-open { overflow:hidden; }
         <textarea class="wb-questions" id="wbQuestions" rows="5" placeholder="예: 거실 확장한 곳 바닥 난방이 되는지 봐 주세요 / 욕실 두 곳 중 한 곳만 하면 얼마나 줄어드나요?"></textarea>
       </article>
       <article class="write-card" id="send">
-        <header><div><h2>ARC에 보내기</h2><p>다 적으셨으면 아래 버튼으로 PDF를 저장해 ARC 카카오톡 채널에 보내 주세요. 다 채우지 못하셔도 괜찮습니다.</p></div></header>
+        <header><div><h2>ARC에 보내기</h2><p><b>실사 전날까지</b> 아래 버튼으로 PDF를 저장해 ARC 카카오톡 채널에 보내 주세요. 다 채우지 못하셔도 괜찮습니다.</p></div></header>
         <ul class="send-status" id="sendStatus" aria-label="작성 현황"></ul>
+        <label class="send-confirm"><input type="checkbox" id="sendConfirm"><span>이 계획은 제가 직접 정했습니다. 바뀌는 게 있으면 새로 정리해서 다시 보내겠습니다.</span></label>
         <div class="send-actions">
           <button class="primary-button" id="sendPrintButton" type="button">ARC에 보낼 PDF 저장</button>
         </div>
+        <p class="send-gate" id="sendGate" role="status"></p>
         <p class="send-notice" id="sendNotice" role="status"></p>
         <ol class="send-how">
           <li><b>PDF 저장</b> — 'ARC에 보낼 PDF 저장'을 누르면 인쇄 창이 열립니다. 프린터 대신 <b>PDF로 저장</b>을 고르세요. 아이폰은 인쇄 화면에서 <b>공유 → 파일에 저장</b>을 누르면 됩니다.</li>
@@ -1813,7 +1958,7 @@ body.cal-sheet-open { overflow:hidden; }
     <p data-copy-key="footer.note">예정 공정표이며 현장 상황과 자재 입고 일정에 따라 변경될 수 있습니다. 변경 시 날짜·내용·확인한 사람을 함께 기록해 주세요.</p>
   </footer>
 
-  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"fb3c058c-06d8-4d64-bb13-09b8b008b8fb","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"4f0c9c4e-8cb1-4116-89a7-400aa394daca","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"3bf2eff2-3eb1-4d21-8e40-c8fd9ef8a945","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"4c9e8d6b-b81e-4ec4-9d73-1558cf7feb91","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"66003114-1917-4184-9b9c-a5d6c2105b13","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"c7c654a9-86aa-4e57-96ad-cfd84759b0d4","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"b74d8cae-5431-4dac-82b0-2565a4ee5db8","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1c17945a-126d-43a9-9212-1ad4734ba595","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"bc804163-c4e2-47a7-b1d5-8f962c9122a2","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"9a4af5e6-7f9d-4d85-a4ac-271e5203ce2e","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"3338ebc6-0190-4740-ad65-32a110afcc69","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"9d23bb4f-bb07-4574-a761-a0e701f339a9","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"59a658e2-7585-4785-887a-a764f1bfd935","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"dd786714-60c1-469b-ad41-cc1fdba6f3bb","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1869ea5a-b309-4e10-8cf2-814a024cc455","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"ddea0243-e041-4623-a65b-2e3978813cd7","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"2fd2ea0e-d079-46a3-b545-b4711df12e4f","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":""}],"quotes":[],"materials":[],"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T13:05:46.861Z"}</script>
+  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"5d982fda-4b67-4233-a3ba-e9fcff53a7b4","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"8d28dfc6-4460-4920-916b-873e16e03cf5","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"6c0c0fd5-ffe5-4957-af7d-7f6b388af84a","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"6d05b7f9-8a51-48d0-bf0e-1b1fa4de6c49","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"9362b79c-f789-4a05-8fee-e75bf0d3c51d","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"c8b799be-609b-4225-ba8e-8dfca44d85d3","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1e106742-28d2-4440-a6d6-4d52a8127f82","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"0c466222-e26c-426c-9f2b-93768826ce40","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"1eb6d408-88eb-4ca9-a0cd-ddc992bfcc30","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"f00f1867-c92a-406b-a3e1-9788046576e4","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"7f544bab-01aa-43f1-bc35-621cb76999d1","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"4c28e973-b678-466e-82fd-fe16764dfd70","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"c34c0ff7-5b41-4b00-9f95-16f1a6a515f6","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"7fd95f8a-073b-4056-8f74-a965b5cdea14","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"fcbc1a87-51d6-4899-bf60-2f8e6d0cf886","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"92887668-9293-47d6-9bec-3a21e0912acd","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]},{"id":"9976de1d-f44b-4cc7-b3db-da2ef74ede6d","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":"","want":"","skip":false,"diag":"","crew":"","others":[]}],"quotes":[],"materials":[],"confirmed":false,"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T17:12:52.065Z"}</script>
   <script>(async()=>{
 // 화면을 그리기 전 원본 (파일 저장 때 이걸 씀: 화면에서 붙인 버튼이 두 번 생기지 않게)
 const pristineHtml=`<!doctype html>\n${document.documentElement.outerHTML}`;
@@ -2093,7 +2238,7 @@ const months=[];
 function renderCalendars(){
   data.schedule.sort(byDate); calendarStack.innerHTML="";
 const months=monthRange();
-  if(!months.length){calendarStack.innerHTML='<div class="empty-state"><b>등록된 공사 일정이 없습니다.</b><span>메뉴의 공정 계획에 일정을 넣으면 달력에 바로 표시됩니다.</span></div>';}
+  if(!months.length){calendarStack.innerHTML='<div class="empty-state"><b>등록된 공사 일정이 없습니다.</b><span>메뉴의 공사 일정에 일정을 넣으면 달력에 바로 표시됩니다.</span></div>';}
   else months.forEach(([year,month])=>calendarStack.append(renderMonth(year,month)));
 const selected=data.schedule.find((item)=>item.id===selectedEventId)||data.schedule[0];
   if(selected)selectCalendarEvent(selected); else {document.querySelector("#detailDate").textContent=""; document.querySelector("#detailType").textContent=""; document.querySelector("#detailTitle").textContent="등록된 일정 없음"; document.querySelector("#detailText").textContent="달력에서 날짜를 누르면 그 날에 공정을 바로 적을 수 있습니다."; document.querySelector("#detailPrepare").textContent=""; document.querySelector("#detailDayNotes").innerHTML="";}
@@ -2125,7 +2270,7 @@ const groups=getChecklistGroups();
   const closed=loadClosedGroups();
   groups.forEach((group)=>{const section=document.createElement("details"); section.className="checklist-group"; section.style.setProperty("--group-color",group.color); section.open=!closed.includes(group.id); section.dataset.group=group.id;
     section.addEventListener("toggle",()=>{const list=loadClosedGroups().filter((id)=>id!==group.id); if(!section.open)list.push(group.id); saveClosedGroups(list);});
-const emptyHint={pre:"관리사무소 신고처럼 공사 전에 할 일을 아래에 추가하세요.",order:"공정 계획에 일정을 넣으면 발주·준비 기한이 자동으로 생깁니다.",required:"공정 계획에 일정을 넣으면 꼭 가야 하는 날이 자동으로 생깁니다.",other:"위 목록에 없는 일을 아래에 추가하세요."};
+const emptyHint={pre:"관리사무소 신고처럼 공사 전에 할 일을 아래에 추가하세요.",order:"공사 일정에 일정을 넣으면 발주·준비 기한이 자동으로 생깁니다.",required:"공사 일정에 일정을 넣으면 꼭 가야 하는 날이 자동으로 생깁니다.",other:"위 목록에 없는 일을 아래에 추가하세요."};
 const summary=document.createElement("summary"); const heading=document.createElement("h3"); heading.textContent=group.title; if(group.key)heading.dataset.copyKey=group.key; const count=document.createElement("span"); count.className="group-count"; const doneCount=group.items.filter(([id])=>checks[id]).length; count.textContent=`${doneCount} / ${group.items.length}`; summary.append(heading,count); if(!group.items.length&&emptyHint[group.id]){const hint=document.createElement("p"); hint.className="group-empty"; hint.textContent=emptyHint[group.id]; queueMicrotask(()=>summary.after(hint));} section.append(summary);
     group.items.forEach(([id,label,detail,labelKey,detailKey,,,,isCustom])=>{const wrapper=document.createElement("label"); wrapper.className="check-item"; wrapper.innerHTML=`<input type="checkbox" data-id="${id}" ${checks[id]?"checked":""} /><span class="check-copy"><strong></strong><small></small></span>`;
 const strong=wrapper.querySelector("strong"),small=wrapper.querySelector("small"); strong.textContent=label; small.textContent=detail; if(labelKey)strong.dataset.copyKey=labelKey; if(detailKey)small.dataset.copyKey=detailKey; wrapper.querySelector("input").addEventListener("change",(event)=>{const latest=loadChecks(); latest[id]=event.target.checked; saveChecks(latest); updateProgress(); const now=group.items.filter(([itemId])=>latest[itemId]).length; count.textContent=`${now} / ${group.items.length}`;});
@@ -2473,30 +2618,77 @@ document.querySelector("#resetDashboard").addEventListener("click",resetDashboar
 function wbId(){return globalThis.crypto?.randomUUID?.()||`row-${Date.now()}-${Math.random().toString(16).slice(2)}`;}
 function defaultBudgetRows(){
   return ["철거·폐기물","설비(급배수·보일러)","방수","전기·조명·통신","창호(샷시)","시스템에어컨","목공·도어","욕실·타일","바닥재(마루)","도배·도장","필름","탄성코트","주방·제작가구","입주청소","가전·가구 구입","관리·신고·기타","예비비"]
-    .map((trade)=>({id:wbId(),trade,priority:"미정",plan:"",quote:"",contract:"",memo:""}));
+    .map((trade)=>({id:wbId(),trade,priority:"미정",plan:"",quote:"",contract:"",memo:"",want:"",skip:false,diag:"",crew:"",others:[]}));
+}
+// 타업체 견적(업체별) 한 줄
+function otherBlank(){return {id:wbId(),company:"",scope:"",amount:"",delivery:"미확인"};}
+// 11/12 판 바꿈: 예전 '받은 견적'은 타업체 견적 1건으로, 예전 자재 칸(공간·모델·색상·수량·구입처)은 '사양' 한 칸으로 옮김. 원래 칸은 지우지 않음. 한 번만 함.
+function upgradeBudgetRow(row){
+  if(!Array.isArray(row.others)){
+    row.others=String(row.quote??"").trim()?[{...otherBlank(),scope:"(전에 '받은 견적'에 적은 금액)",amount:row.quote}]:[];
+  }
+  row.others=row.others.filter((o)=>o&&typeof o==="object").map((o)=>({...o,id:o.id||wbId()}));
+  return row;
+}
+function upgradeMaterialRow(row){
+  if(row.detail===undefined)row.detail=[row.space,row.model,row.spec,row.qty?`수량 ${row.qty}`:"",row.shop?`구입처 ${row.shop}`:""].map((v)=>String(v??"").trim()).filter(Boolean).join(" · ");
+  if(!Array.isArray(row.others))row.others=[];
+  row.others=row.others.filter((o)=>o&&typeof o==="object").map((o)=>({...o,id:o.id||wbId()}));
+  return row;
 }
 function normalizeWorkbench(value){
   const wb=value&&typeof value==="object"?value:{};
   const rows=(list)=>Array.isArray(list)?list.filter((row)=>row&&typeof row==="object").map((row)=>({...row,id:row.id||wbId()})):null;
   return {
-    budgets:rows(wb.budgets)||defaultBudgetRows(),
+    ...wb, // 모르는 칸도 버리지 않음(새 판에서 더한 칸을 옛 판이 지우지 않게, 11/12)
+    budgets:(rows(wb.budgets)||defaultBudgetRows()).map(upgradeBudgetRow),
     quotes:rows(wb.quotes)||[],
-    materials:rows(wb.materials)||[],
+    materials:(rows(wb.materials)||[]).map(upgradeMaterialRow),
+    confirmed:Boolean(wb.confirmed),
     questions:typeof wb.questions==="string"?wb.questions:"",
     unit:value&&typeof value==="object"?(wb.unit||"manwon"):"won",
   };
 }
-// 금액 읽기: "15,000,000" "1500만" "2억 3천만원" "2억3500만" "3.5억" → 원
+// 금액 읽기: "15,000,000" "1500만" "2억 3천만원" "2억3500만" "3.5억" "1억5천" "3천5백만" "천오백만" "약 1500만" "₩15,000,000" → 원
+// '억' 뒤에 '만' 없이 1만 미만 숫자가 오면 '만'으로 읽음("1억5천" = 1억 5천만원, 대표 11/12 결정 1단계)
 const toNumber=(value)=>{
-  let text=String(value??"").replace(/[,\s]/g,"").replace(/원$/,"").trim(); if(!text)return null;
+  let text=String(value??"").replace(/[,\s₩]/g,"").replace(/(정도|쯤)$/,"").replace(/원$/,"").replace(/^(약|대략)/,"").trim(); if(!text)return null;
   if(/^-?\d+(\.\d+)?$/.test(text))return Number(text);
-  const unit={"억":100000000,"천만":10000000,"백만":1000000,"십만":100000,"만":10000,"천":1000,"백":100,"십":10};
-  let total=0, rest=text, matched=false;
-  const big=rest.match(/^(\d+(?:\.\d+)?)억/); if(big){total+=Number(big[1])*unit["억"]; rest=rest.slice(big[0].length); matched=true;}
-  const man=rest.match(/^(\d+(?:\.\d+)?)?(천|백|십)?만/); if(man){total+=(man[1]!==undefined?Number(man[1]):1)*(man[2]?unit[man[2]]:1)*10000; rest=rest.slice(man[0].length); matched=true;}
-  const small=rest.match(/^(\d+(?:\.\d+)?)?(천|백|십)?$/); if(small&&rest){total+=(small[1]!==undefined?Number(small[1]):1)*(small[2]?unit[small[2]]:1); rest=""; matched=true;}
-  return matched&&!rest?Math.round(total):NaN;
+  const digit={"일":1,"이":2,"삼":3,"사":4,"오":5,"육":6,"칠":7,"팔":8,"구":9};
+  text=text.replace(/[일이삼사오육칠팔구]/g,(c)=>String(digit[c]));
+  if(!/^[\d.천백십만억]+$/.test(text))return NaN;
+  const small={"천":1000,"백":100,"십":10};
+  const tokens=text.match(/\d+(?:\.\d+)?|[천백십만억]/g)||[]; if(tokens.join("")!==text)return NaN;
+  let total=0, group=0, cur=null, sawEok=false, sawMan=false, last="";
+  for(const t of tokens){
+    if(/^\d/.test(t)){if(cur!==null)return NaN; cur=Number(t);}
+    else if(small[t]){if(cur===null&&last&&small[last])return NaN; group+=(cur??1)*small[t]; cur=null;}
+    else{ // 만·억
+      if((t==="억"&&(sawEok||sawMan))||(t==="만"&&sawMan))return NaN;
+      const section=group+(cur??0)||1; total+=section*(t==="억"?100000000:10000); group=0; cur=null; if(t==="억")sawEok=true; else sawMan=true;
+    }
+    last=t;
+  }
+  let rest=group+(cur??0);
+  if(sawEok&&!sawMan&&rest>0&&rest<10000)rest*=10000;
+  return Math.round(total+rest);
 };
+// 금액 칸 아래에 읽은 값을 늘 보임(휴대폰은 말풍선이 안 보임)
+const MONEY_LIMIT=100000000000; // 1,000억
+function moneyRead(field){
+  let note=field.parentElement?.querySelector(":scope > .money-read");
+  if(!note){note=document.createElement("small"); note.className="money-read"; note.setAttribute("aria-live","polite"); field.parentElement.append(note);}
+  const n=toNumber(field.value);
+  field.classList.toggle("invalid",Number.isNaN(n));
+  note.classList.remove("bad","warn");
+  if(n===null){note.textContent="";}
+  else if(Number.isNaN(n)){note.textContent="금액으로 못 읽었어요 · 예: 1500만, 1억5천만"; note.classList.add("bad");}
+  else if(Math.abs(n)>=MONEY_LIMIT){note.textContent=`${manwon(n)} · 금액을 다시 확인해 주세요`; note.classList.add("warn");}
+  else note.textContent=`= ${manwon(n)}`;
+  field.title=Number.isFinite(n)&&n!==null?manwon(n):"";
+  return n;
+}
+const unreadCount=(rows,keys)=>rows.reduce((c,row)=>c+keys.filter((k)=>Number.isNaN(toNumber(row[k]))).length,0);
 // 금액 보이기: 230000000 → "2억 3,000만원", 1550000 → "155만원", 4500 → "4,500원"
 const manwon=(n)=>{if(!Number.isFinite(n))return "-"; const sign=n<0?"-":""; let v=Math.round(Math.abs(n)); const eok=Math.floor(v/100000000); v-=eok*100000000; const man=Math.floor(v/10000); const won=v-man*10000; const parts=[]; if(eok)parts.push(`${eok.toLocaleString("ko-KR")}억`); if(man)parts.push(`${man.toLocaleString("ko-KR")}만`); if(won||!parts.length)parts.push(won.toLocaleString("ko-KR")); return sign+parts.join(" ")+"원";};
 // 예전 파일(만원 단위) 값을 원으로 한 번만 바꿈
@@ -2515,13 +2707,12 @@ const wbTables={
   budgets:{
     columns:[
       {key:"trade",label:"공정",type:"text",width:"wide"},
-      {key:"priority",label:"우선순위",type:"select",options:["미정","상","중","하"]},
-      {key:"plan",label:"내 예산(원)",type:"money"},
-      {key:"quote",label:"받은 견적(원)",type:"money"},
-      {key:"contract",label:"계약 금액(원)",type:"money"},
-      {key:"memo",label:"메모",type:"text",width:"wide"},
+      {key:"diag",label:"진단 금액(원)",type:"money"},
+      {key:"crew",label:"ARC CREW 견적(원)",type:"money"},
+      {key:"others",label:"타업체 견적",type:"others"},
+      {key:"contract",label:"최종 계약 금액(원)",type:"money"},
     ],
-    blank:()=>({id:makeId(),trade:"",priority:"미정",plan:"",quote:"",contract:"",memo:""}),
+    blank:()=>({id:makeId(),trade:"",priority:"미정",plan:"",quote:"",contract:"",memo:"",want:"",skip:false,diag:"",crew:"",others:[]}),
     addLabel:"+ 공정 추가",
   },
   quotes:{
@@ -2532,8 +2723,8 @@ const wbTables={
       {key:"vat",label:"부가세",type:"select",options:["미확인","포함","별도(10%)"]},
       {key:"vatTotal",label:"부가세 포함",type:"calc"},
       {key:"same",label:"다른 업체와 범위 같음?",type:"select",options:["미확인","같음","조건 다름"]},
-      {key:"scope",label:"포함된 범위·사양",type:"text",width:"wide"},
-      {key:"missing",label:"빠진 것·추가 조건",type:"text",width:"wide"},
+      {key:"scope",label:"포함된 범위·사양",type:"longtext",width:"wide"},
+      {key:"missing",label:"빠진 것·추가 조건",type:"longtext",width:"wide"},
       {key:"date",label:"견적일",type:"date"},
     ],
     blank:()=>({id:makeId(),trade:"",company:"",amount:"",vat:"미확인",same:"미확인",scope:"",missing:"",date:""}),
@@ -2541,22 +2732,60 @@ const wbTables={
   },
   materials:{
     columns:[
-      {key:"space",label:"공간",type:"text"},
-      {key:"item",label:"품목",type:"text"},
-      {key:"model",label:"브랜드·모델",type:"text",width:"wide"},
-      {key:"spec",label:"색상·규격",type:"text"},
-      {key:"qty",label:"수량",type:"text"},
-      {key:"shop",label:"구입처",type:"text"},
-      {key:"price",label:"금액(원)",type:"money"},
-      {key:"state",label:"결정 상태",type:"select",options:["미정","알아보는 중","결정","주문 완료"]},
-      {key:"memo",label:"메모",type:"text",width:"wide"},
+      {key:"item",label:"품목",type:"text",placeholder:"예) 욕실 벽 타일"},
+      {key:"detail",label:"사양(제품·모델·수량)",type:"longtext",width:"wide",placeholder:"예) 600×600 포세린 무광, 12박스"},
+      {key:"partner",label:"ARC 파트너사 견적(원)",type:"money"},
+      {key:"others",label:"타업체 견적",type:"others"},
+      {key:"price",label:"최종 구매 금액(원)",type:"money"},
+      {key:"order",label:"발주·납기",type:"text",placeholder:"예) 12/5 발주 · 12/12 도착"},
     ],
-    blank:()=>({id:makeId(),space:"",item:"",model:"",spec:"",qty:"",shop:"",price:"",state:"미정",memo:""}),
+    blank:()=>({id:makeId(),space:"",item:"",model:"",spec:"",qty:"",shop:"",price:"",state:"미정",memo:"",detail:"",partner:"",order:"",others:[]}),
     addLabel:"+ 자재 추가",
   },
 };
 function quoteVatTotal(row){const n=toNumber(row.amount); if(!Number.isFinite(n)||n===null)return null; if(row.vat==="별도(10%)")return Math.round(n*1.1); if(row.vat==="포함")return n; return null;}
 
+const shortMoney=(n)=>manwon(n).replace(/원$/,"");
+function othersText(list){
+  const vals=list.map((o)=>toNumber(o.amount)).filter((n)=>Number.isFinite(n)&&n!==null).sort((a,b)=>a-b);
+  if(!list.length)return "없음";
+  if(!vals.length)return `${list.length}건 · 금액 미입력`;
+  return vals.length===1||vals[0]===vals.at(-1)?`${list.length}건 · ${shortMoney(vals[0])}`:`${list.length}건 · ${shortMoney(vals[0])}~${shortMoney(vals.at(-1))}`;
+}
+const openOthers=new Set();
+function buildOthersPanel(name,row,colspan,refresh){
+  const tr=document.createElement("tr"); tr.className="wb-others-row"; tr.dataset.othersFor=row.id; tr.hidden=!openOthers.has(row.id); if(!row.others.length)tr.classList.add("is-empty");
+  const td=document.createElement("td"); td.colSpan=colspan; tr.append(td);
+  const box=document.createElement("div"); box.className="wb-others";
+  const title=document.createElement("p"); title.className="wb-others-title"; title.textContent=`${row.trade||row.item||"이 줄"} · 타업체 견적`; box.append(title);
+  const list=document.createElement("div"); list.className="wb-others-list";
+  const fields=[["company","업체 이름","text","예) ○○인테리어"],["scope",name==="materials"?"사양·포함 범위":"포함 범위·사양","longtext","예) 철거 포함, 폐기물 별도"],["amount","금액(원)","money",""],["delivery","배송 포함","select",["미확인","포함","별도","해당 없음"]]];
+  row.others.forEach((o)=>{
+    const line=document.createElement("div"); line.className="wb-other";
+    fields.forEach(([key,label,type,extra])=>{
+      const wrap=document.createElement("label"); wrap.className=`wb-other-${key}`; const cap=document.createElement("span"); cap.textContent=label; wrap.append(cap);
+      let f;
+      if(type==="select"){f=document.createElement("select"); extra.forEach((v)=>{const op=document.createElement("option"); op.value=v; op.textContent=v; f.append(op);}); f.value=o[key]||extra[0];}
+      else if(type==="longtext"){f=document.createElement("textarea"); f.rows=2; f.placeholder=extra; f.value=o[key]??"";}
+      else{f=document.createElement("input"); f.type="text"; f.placeholder=extra; f.value=o[key]??"";}
+      f.dataset.otherRow=o.id; f.dataset.otherField=key; f.setAttribute("aria-label",label);
+      wrap.append(f); line.append(wrap);
+      if(type==="money")moneyRead(f);
+      f.addEventListener(type==="select"?"change":"input",()=>{o[key]=f.value; if(type==="money")moneyRead(f); persistData(); refresh();});
+    });
+    const del=document.createElement("button"); del.type="button"; del.className="wb-remove"; del.textContent="×"; del.setAttribute("aria-label","이 업체 견적 삭제");
+    del.addEventListener("click",()=>{if((o.company||o.amount||o.scope)&&!confirm("이 업체 견적을 삭제할까요?"))return; row.others=row.others.filter((x)=>x.id!==o.id); persistData(); renderWbTable(name);});
+    line.append(del); list.append(line);
+  });
+  if(!row.others.length){const empty=document.createElement("p"); empty.className="wb-others-empty"; empty.textContent="아직 적은 타업체 견적이 없습니다."; list.append(empty);}
+  box.append(list);
+  const add=document.createElement("button"); add.type="button"; add.className="small-button wb-other-add"; add.textContent="+ 업체 추가";
+  add.addEventListener("click",()=>{const o=otherBlank(); row.others.push(o); openOthers.add(row.id); persistData(); renderWbTable(name); document.querySelector(`[data-other-row="${CSS.escape(o.id)}"][data-other-field="company"]`)?.focus();});
+  const close=document.createElement("button"); close.type="button"; close.className="small-button wb-other-close"; close.textContent="접기";
+  close.addEventListener("click",()=>{openOthers.delete(row.id); renderWbTable(name);});
+  const actions=document.createElement("div"); actions.className="wb-others-actions"; actions.append(add,close); box.append(actions);
+  td.append(box); return tr;
+}
 function renderWbTable(name){
   const spec=wbTables[name], rows=data.workbench[name], host=document.querySelector(`[data-wb-table="${name}"]`); if(!host)return;
   host.innerHTML="";
@@ -2566,29 +2795,41 @@ function renderWbTable(name){
   const body=document.createElement("tbody");
   if(!rows.length){const tr=document.createElement("tr"); tr.className="wb-empty"; tr.innerHTML=`<td colspan="${spec.columns.length+1}">아직 입력한 내용이 없습니다. 아래 '${spec.addLabel.replace("+ ","")}'를 눌러 시작하세요.</td>`; body.append(tr);}
   rows.forEach((row)=>{
-    const tr=document.createElement("tr");
+    const tr=document.createElement("tr"); if(row.skip)tr.classList.add("wb-skip");
+    let othersButton=null;
+    const refreshOthers=()=>{if(!othersButton)return; const s=othersButton.querySelector("span"); s.textContent=othersText(row.others); if(!row.others.length){const hint=document.createElement("small"); hint.className="others-hint"; hint.textContent=" · 눌러서 적기"; s.append(hint);} const blank=!row.others.some((o)=>["company","scope","amount"].some((k)=>String(o[k]||"").trim())); othersButton.closest("tr")?.nextElementSibling?.classList.toggle("is-empty",blank);};
     spec.columns.forEach((col)=>{
       const td=document.createElement("td"); td.dataset.label=col.label;
       if(col.type==="calc"){td.className="wb-calc"; td.dataset.calc=row.id; const v=quoteVatTotal(row); td.textContent=v===null?"-":manwon(v); tr.append(td); return;}
+      if(col.type==="others"){
+        if(!Array.isArray(row.others))row.others=[];
+        othersButton=document.createElement("button"); othersButton.type="button"; othersButton.className="wb-others-toggle"; othersButton.dataset.wbRow=row.id; othersButton.dataset.wbField="others";
+        othersButton.setAttribute("aria-expanded",String(openOthers.has(row.id)));
+        const s=document.createElement("span"); othersButton.append(s); const arrow=document.createElement("i"); arrow.setAttribute("aria-hidden","true"); othersButton.append(arrow);
+        othersButton.addEventListener("click",()=>{if(openOthers.has(row.id))openOthers.delete(row.id); else{openOthers.add(row.id); if(!row.others.length){row.others.push(otherBlank()); persistData();}} renderWbTable(name); const first=document.querySelector(`[data-others-for="${CSS.escape(row.id)}"] [data-other-field="company"]`); if(openOthers.has(row.id)&&first&&!first.value)first.focus();});
+        td.className="wb-others-cell"; td.append(othersButton); tr.append(td); return;
+      }
       let field;
       if(col.type==="select"){field=document.createElement("select"); col.options.forEach((option)=>{const o=document.createElement("option"); o.value=option; o.textContent=option; field.append(o);}); field.value=row[col.key]||col.options[0];}
-      else {field=document.createElement("input"); field.type=col.type==="date"?"date":"text"; if(col.type==="money"){field.inputMode="text"; field.placeholder="";} field.value=row[col.key]??"";}
+      else if(col.type==="longtext"){field=document.createElement("textarea"); field.rows=2; field.value=row[col.key]??""; if(col.placeholder)field.placeholder=col.placeholder;}
+      else {field=document.createElement("input"); field.type=col.type==="date"?"date":"text"; if(col.type==="money"){field.inputMode="text"; field.placeholder="";} else if(col.placeholder)field.placeholder=col.placeholder; field.value=row[col.key]??"";}
       field.setAttribute("aria-label",col.label); field.dataset.wbRow=row.id; field.dataset.wbField=col.key;
-      const update=()=>{row[col.key]=field.value; if(col.type==="money"){const n=toNumber(field.value); field.classList.toggle("invalid",Number.isNaN(n)); field.title=Number.isFinite(n)&&n!==null?manwon(n):"";} persistData(); refreshWbSummary(name,row);};
-      if(col.type==="money"){const n=toNumber(field.value); field.title=Number.isFinite(n)&&n!==null?manwon(n):""; field.addEventListener("blur",()=>{const v=toNumber(field.value); if(Number.isFinite(v)&&v!==null&&!/^[\d,]+$/.test(field.value.trim()))return; if(Number.isFinite(v)&&v!==null){field.value=v.toLocaleString("ko-KR"); row[col.key]=field.value; persistData();}});}
+      const update=()=>{row[col.key]=field.value; if(col.type==="money")moneyRead(field); persistData(); refreshWbSummary(name,row);};
       field.addEventListener(col.type==="select"||col.type==="date"?"change":"input",update);
       td.append(field); tr.append(td);
+      if(col.type==="money"){moneyRead(field); field.addEventListener("blur",()=>{const v=toNumber(field.value); if(Number.isFinite(v)&&v!==null&&/^[\d,]+$/.test(field.value.trim())){field.value=v.toLocaleString("ko-KR"); row[col.key]=field.value; persistData(); moneyRead(field);}});}
     });
     const action=document.createElement("td"); action.className="wb-action-col";
     const remove=document.createElement("button"); remove.type="button"; remove.className="wb-remove"; remove.textContent="×"; remove.setAttribute("aria-label","이 줄 삭제");
-    remove.addEventListener("click",()=>{const filled=spec.columns.some((col)=>col.type!=="select"&&col.type!=="calc"&&String(row[col.key]||"").trim()); if(filled&&!confirm("이 줄을 삭제할까요?"))return; data.workbench[name]=data.workbench[name].filter((entry)=>entry.id!==row.id); persistData(); renderWbTable(name);});
+    remove.addEventListener("click",()=>{const filled=spec.columns.some((col)=>col.type!=="select"&&col.type!=="calc"&&col.type!=="others"&&String(row[col.key]||"").trim())||(row.others||[]).length||String(row.want||"").trim()||String(row.plan||"").trim(); if(filled&&!confirm(name==="budgets"?"이 공정을 삭제할까요? 공정별 공사계획에서도 함께 지워집니다.":"이 줄을 삭제할까요?"))return; data.workbench[name]=data.workbench[name].filter((entry)=>entry.id!==row.id); persistData(); renderWbTable(name); if(name==="budgets")renderWorks();});
     action.append(remove); tr.append(action); body.append(tr);
+    if(othersButton){body.append(buildOthersPanel(name,row,spec.columns.length+1,refreshOthers)); refreshOthers();}
   });
   table.append(head,body);
-  if(name==="budgets"){const foot=document.createElement("tfoot"); foot.innerHTML='<tr><th>합계</th><td></td><td data-sum="plan"></td><td data-sum="quote"></td><td data-sum="contract"></td><td colspan="2"></td></tr>'; table.append(foot);}
+  if(name==="budgets"){const foot=document.createElement("tfoot"); foot.innerHTML='<tr><th>합계</th><td data-sum="diag"></td><td data-sum="crew"></td><td></td><td data-sum="contract"></td><td></td></tr>'; table.append(foot);}
   wrap.append(table); host.append(wrap);
   const add=document.createElement("button"); add.type="button"; add.className="small-button wb-add"; add.textContent=spec.addLabel;
-  add.addEventListener("click",()=>{const row=spec.blank(); data.workbench[name].push(row); persistData(); renderWbTable(name); host.querySelector(`[data-wb-row="${row.id}"]`)?.focus();});
+  add.addEventListener("click",()=>{const row=spec.blank(); data.workbench[name].push(row); persistData(); renderWbTable(name); if(name==="budgets")renderWorks(); host.querySelector(`[data-wb-row="${row.id}"]`)?.focus();});
   host.append(add);
   refreshWbSummary(name);
 }
@@ -2597,45 +2838,128 @@ function refreshWbSummary(name,row){
   if(name==="quotes")renderQuoteSummary();
   if(name==="budgets"){
     const rows=data.workbench.budgets;
-    ["plan","quote","contract"].forEach((key)=>{const cell=document.querySelector(`[data-wb-table="budgets"] [data-sum="${key}"]`); if(cell)cell.textContent=manwon(sumField(rows,key));});
+    ["diag","crew","contract"].forEach((key)=>{const cell=document.querySelector(`[data-wb-table="budgets"] [data-sum="${key}"]`); if(cell)cell.textContent=manwon(sumField(rows,key));});
     renderBudgetSummary();
   }
-  if(name==="materials"){const box=document.querySelector("#materialSummary"); if(box){const rows=data.workbench.materials; const decided=rows.filter((r)=>["결정","주문 완료"].includes(r.state)).length; box.textContent=rows.length?`자재 ${rows.length}개 중 ${decided}개 결정 · 입력 금액 합계 ${manwon(sumField(rows,"price"))}`:"";}}
+  if(name==="materials"){const box=document.querySelector("#materialSummary"); if(box){const rows=data.workbench.materials; const bought=rows.filter((r)=>String(r.price||"").trim()).length; const bad=unreadCount(rows,["price","partner"]); box.textContent=rows.length?`자재 ${rows.length}개 중 ${bought}개 최종 구매 금액 입력 · 최종 구매 금액 합계 ${manwon(sumField(rows,"price"))}${bad?` · ${bad}칸은 금액으로 못 읽어 합계에서 뺐어요`:""}`:"";}}
 }
 function renderBudgetSummary(){
   const box=document.querySelector("#budgetSummary"); if(!box)return;
-  const total=toNumber(data.project.budget), rows=data.workbench.budgets, plan=sumField(rows,"plan"), contract=sumField(rows,"contract"), quote=sumField(rows,"quote");
+  const total=toNumber(data.project.budget), rows=data.workbench.budgets, diag=sumField(rows,"diag"), crew=sumField(rows,"crew"), contract=sumField(rows,"contract");
+  const hasTotal=Number.isFinite(total)&&total!==null;
   const cards=[
-    ["총예산",Number.isFinite(total)&&total!==null?manwon(total):"미입력",""],
-    ["공정별 예산 합계",manwon(plan),Number.isFinite(total)&&total?(plan>total?`총예산보다 ${manwon(plan-total)} 많음`:`총예산 안에서 ${manwon(total-plan)} 남음`):""],
-    ["받은 견적 합계",manwon(quote),plan&&quote?(quote>plan?`내 예산보다 ${manwon(quote-plan)} 많음`:`내 예산보다 ${manwon(plan-quote)} 적음`):""],
-    ["계약 금액 합계",manwon(contract),""],
+    ["총예산",hasTotal?manwon(total):"미입력",""],
+    ["진단 금액 합계",manwon(diag),""],
+    ["ARC CREW 견적 합계",manwon(crew),""],
+    ["최종 계약 금액 합계",manwon(contract),hasTotal&&total&&contract?(contract>total?`총예산보다 ${manwon(contract-total)} 많음`:`총예산 안에서 ${manwon(total-contract)} 남음`):""],
   ];
   box.innerHTML=""; cards.forEach(([label,value,note])=>{const card=document.createElement("article"); const s=document.createElement("span"); s.textContent=label; const b=document.createElement("strong"); b.textContent=value; card.append(s,b); if(note){const small=document.createElement("small"); small.textContent=note; small.className=note.includes("많음")?"over":""; card.append(small);} box.append(card);});
+  const bad=unreadCount(rows,["diag","crew","contract"])+(Number.isNaN(total)?1:0);
+  if(bad){const warn=document.createElement("p"); warn.className="wb-unread"; warn.textContent=`${bad}칸은 금액으로 못 읽어 합계에서 뺐어요. 빨간 칸을 '1500만', '1억5천만'처럼 고쳐 주세요.`; box.append(warn);}
+}
+/* ===== 공정별 공사계획 (대표 11/12): 공정마다 하고 싶은 것 + 이 공정에 쓸 예산, 공정 내역서 PDF(금액 없음) ===== */
+const worksActive=()=>data.workbench.budgets.filter((r)=>!r.skip);
+function renderWorksSummary(){
+  const box=document.querySelector("#worksSummary"); if(!box)return;
+  const total=toNumber(data.project.budget), hasTotal=Number.isFinite(total)&&total!==null, active=worksActive(), sum=sumField(active,"plan"), written=active.filter((r)=>String(r.want||"").trim()).length;
+  const cards=[
+    ["총예산",hasTotal?manwon(total):"미입력",hasTotal?"현장 정보에서 고치기":"현장 정보에서 입력"],
+    ["공정별 합계",manwon(sum),""],
+    ["남은 금액",hasTotal?manwon(total-sum):"-",hasTotal&&sum>total?`총예산보다 ${manwon(sum-total)} 많음`:""],
+    ["작성 공정 수",`${written} / ${active.length}`,"하고 싶은 것을 적은 공정"],
+  ];
+  box.innerHTML=""; cards.forEach(([label,value,note],i)=>{const card=document.createElement("article"); if(i===0){card.className="kpi-link"; card.dataset.goto="tab-info"; card.setAttribute("role","button"); card.tabIndex=0;} const s=document.createElement("span"); s.textContent=label; const b=document.createElement("strong"); b.textContent=value; card.append(s,b); if(note){const small=document.createElement("small"); small.textContent=note; small.className=note.includes("많음")?"over":""; card.append(small);} box.append(card);});
+  const bad=unreadCount(active,["plan"])+(Number.isNaN(total)?1:0);
+  if(bad){const warn=document.createElement("p"); warn.className="wb-unread"; warn.textContent=`${bad}칸은 금액으로 못 읽어 합계에서 뺐어요. 빨간 칸을 '1500만', '1억5천만'처럼 고쳐 주세요.`; box.append(warn);}
+}
+function renderWorks(){
+  const grid=document.querySelector("#worksGrid"); if(!grid)return;
+  grid.innerHTML="";
+  data.workbench.budgets.forEach((row,index)=>{
+    const card=document.createElement("article"); card.className="works-card"; card.classList.toggle("skip",Boolean(row.skip)); card.dataset.worksRow=row.id;
+    const head=document.createElement("header");
+    const num=document.createElement("b"); num.className="works-num"; num.textContent=String(index+1).padStart(2,"0");
+    const name=document.createElement("input"); name.type="text"; name.className="works-trade"; name.value=row.trade||""; name.placeholder="공정 이름"; name.setAttribute("aria-label","공정 이름"); name.dataset.wbRow=row.id; name.dataset.wbField="trade";
+    name.addEventListener("input",()=>{row.trade=name.value; persistData();}); name.addEventListener("change",()=>renderWbTable("budgets"));
+    const skip=document.createElement("label"); skip.className="works-skip"; const sb=document.createElement("input"); sb.type="checkbox"; sb.checked=Boolean(row.skip); sb.dataset.wbRow=row.id; sb.dataset.wbField="skip"; skip.append(sb,document.createTextNode(" 이 공정 안 함"));
+    sb.addEventListener("change",()=>{row.skip=sb.checked; persistData(); renderWorks(); renderWbTable("budgets"); renderSendStatus();});
+    head.append(num,name,skip); card.append(head);
+    const body=document.createElement("div"); body.className="works-body"; body.hidden=Boolean(row.skip);
+    const wantLabel=document.createElement("label"); wantLabel.className="works-want"; const wl=document.createElement("span"); wl.textContent="하고 싶은 것"; const want=document.createElement("textarea"); want.rows=4; want.value=row.want||""; want.placeholder="예) 9mm 문선, 거실 아트월 틀, 천장 평탄화"; want.dataset.wbRow=row.id; want.dataset.wbField="want"; want.setAttribute("aria-label",`${row.trade||"이 공정"} 하고 싶은 것`);
+    want.addEventListener("input",()=>{row.want=want.value; persistData(); renderWorksSummary(); renderSendStatus();});
+    wantLabel.append(wl,want);
+    const moneyLabel=document.createElement("label"); moneyLabel.className="works-money"; const ml=document.createElement("span"); ml.textContent="이 공정에 쓸 예산"; const money=document.createElement("input"); money.type="text"; money.inputMode="text"; money.value=row.plan||""; money.placeholder="예) 800만"; money.dataset.wbRow=row.id; money.dataset.wbField="plan"; money.setAttribute("aria-label",`${row.trade||"이 공정"} 예산`);
+    moneyLabel.append(ml,money);
+    money.addEventListener("input",()=>{row.plan=money.value; moneyRead(money); persistData(); renderWorksSummary();});
+    money.addEventListener("blur",()=>{const v=toNumber(money.value); if(Number.isFinite(v)&&v!==null&&/^[\d,]+$/.test(money.value.trim())){money.value=v.toLocaleString("ko-KR"); row.plan=money.value; persistData(); moneyRead(money);}});
+    const pdf=document.createElement("button"); pdf.type="button"; pdf.className="secondary-button works-pdf"; pdf.textContent="이 공정 내역서 PDF"; pdf.addEventListener("click",()=>printScope([row]));
+    body.append(wantLabel,moneyLabel,pdf); card.append(body);
+    grid.append(card); moneyRead(money);
+  });
+  renderWorksSummary();
+}
+document.querySelector("#worksAdd")?.addEventListener("click",()=>{const row=wbTables.budgets.blank(); data.workbench.budgets.push(row); persistData(); renderWorks(); renderWbTable("budgets"); document.querySelector(`#worksGrid [data-wb-row="${CSS.escape(row.id)}"][data-wb-field="trade"]`)?.focus();});
+document.querySelector("#worksPdfAll")?.addEventListener("click",()=>printScope(worksActive(),true));
+// 공정 내역서 PDF: 다른 업체 견적용. 고객 이름·현장·평형·공사 기간·공정·하고 싶은 것만. 금액은 일절 넣지 않음.
+function buildScopeSheet(rows,all=false){
+  const list=rows.filter((r)=>!r.skip&&String(r.want||"").trim());
+  if(!list.length)return null;
+  let sheet=document.querySelector("#scopeSheet"); if(!sheet){sheet=document.createElement("div"); sheet.id="scopeSheet"; sheet.className="scope-sheet"; sheet.setAttribute("aria-hidden","true"); document.body.append(sheet);}
+  sheet.innerHTML="";
+  const p=data.project, dot=(v)=>v?v.replaceAll("-","."):"";
+  const h1=document.createElement("h1"); h1.textContent=!all&&list.length===1?`${list[0].trade||"공정"} 공사 내역서`:"공정별 공사 내역서"; sheet.append(h1);
+  const dl=document.createElement("dl");
+  [["고객",p.customer],["현장",p.home],["평형",p.area],["공사 기간",p.start||p.end?`${dot(p.start)||"?"} – ${dot(p.end)||"?"}`:""]].forEach(([k,v])=>{const d=document.createElement("div"); const dt=document.createElement("dt"); dt.textContent=k; const dd=document.createElement("dd"); dd.textContent=String(v||"").trim()||"-"; d.append(dt,dd); dl.append(d);});
+  sheet.append(dl);
+  const note=document.createElement("p"); note.className="scope-note"; note.textContent="고객이 직접 정리한 공정별 공사 내용입니다. 이 내용을 기준으로 견적을 부탁드립니다."; sheet.append(note);
+  list.forEach((r)=>{const sec=document.createElement("section"); const h2=document.createElement("h2"); h2.textContent=r.trade||"공정"; const body=document.createElement("p"); body.textContent=r.want.trim(); sec.append(h2,body); sheet.append(sec);});
+  return {sheet,list};
+}
+function printScope(rows,all=false){
+  const built=buildScopeSheet(rows,all);
+  if(!built){arcNotice(!all?"이 공정의 '하고 싶은 것'을 먼저 적어 주세요.":"'하고 싶은 것'을 적은 공정이 없습니다. 먼저 적어 주세요."); return;}
+  const {list}=built, p=data.project, now=new Date(), pad=(n)=>String(n).padStart(2,"0");
+  const oldTitle=document.title; document.title=[p.customer?.trim(),!all&&list.length===1?`${list[0].trade}_내역서`:"공정내역서",`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`].filter(Boolean).join("_").replace(/[\\/:*?"<>|\s·]/g,"-");
+  let topDoc=null, topOld=""; try{if(window.top&&window.top!==window){topDoc=window.top.document; topOld=topDoc.title; topDoc.title=document.title;}}catch{}
+  document.body.classList.add("print-scope");
+  let finished=false;
+  const done=()=>{if(finished)return; finished=true; document.body.classList.remove("print-scope"); document.title=oldTitle; if(topDoc)topDoc.title=topOld;};
+  window.addEventListener("afterprint",done,{once:true});
+  setTimeout(()=>{if(finished)return; const back=()=>{["pointerdown","keydown","touchstart"].forEach((t)=>document.removeEventListener(t,back,true)); done();}; ["pointerdown","keydown","touchstart"].forEach((t)=>document.addEventListener(t,back,true));},1500);
+  window.print();
 }
 function renderQuoteSummary(){
   const box=document.querySelector("#quoteSummary"); if(!box)return; box.innerHTML="";
   const byTrade=new Map(); data.workbench.quotes.forEach((row)=>{const trade=String(row.trade||"").trim(); if(!trade)return; if(!byTrade.has(trade))byTrade.set(trade,[]); byTrade.get(trade).push(row);});
   if(!byTrade.size){box.hidden=true; return;} box.hidden=false;
+  // 범위가 '같음'인 견적끼리만 금액 순서. '조건 다름'·'미확인'은 '범위 확인 전'으로 따로 (11/12 1단계)
   byTrade.forEach((rows,trade)=>{
-    const priced=rows.map((row)=>({row,v:quoteVatTotal(row)})).filter((entry)=>entry.v!==null).sort((a,b)=>a.v-b.v);
+    const same=rows.filter((row)=>row.same==="같음"), check=rows.filter((row)=>row.same!=="같음");
+    const priced=same.map((row)=>({row,v:quoteVatTotal(row)})).filter((entry)=>entry.v!==null).sort((a,b)=>a.v-b.v);
     const line=document.createElement("p"); const strong=document.createElement("b"); strong.textContent=trade; line.append(strong);
     let text=` · 업체 ${rows.length}곳`;
-    if(priced.length>=2)text+=` · 부가세 포함 최저 ${priced[0].row.company||"업체"} ${manwon(priced[0].v)} / 최고 ${priced.at(-1).row.company||"업체"} ${manwon(priced.at(-1).v)} (차이 ${manwon(priced.at(-1).v-priced[0].v)})`;
-    else if(priced.length===1)text+=` · ${priced[0].row.company||"업체"} ${manwon(priced[0].v)}`;
-    if(rows.some((row)=>row.same==="조건 다름"))text+=" · 범위가 다른 견적이 있어 금액만으로 비교하기 어렵습니다";
-    if(rows.some((row)=>row.vat==="미확인"&&toNumber(row.amount)))text+=" · 부가세 포함 여부를 확인하세요";
+    if(priced.length>=2)text+=` · 범위 같은 견적 ${priced.length}곳 부가세 포함 최저 ${priced[0].row.company||"업체"} ${manwon(priced[0].v)} / 최고 ${priced.at(-1).row.company||"업체"} ${manwon(priced.at(-1).v)} (차이 ${manwon(priced.at(-1).v-priced[0].v)})`;
+    else if(priced.length===1)text+=` · 범위 같은 견적 ${priced[0].row.company||"업체"} ${manwon(priced[0].v)}`;
+    const vatUnknown=same.filter((row)=>row.vat==="미확인"&&toNumber(row.amount));
+    if(vatUnknown.length)text+=` · 부가세 포함 여부 확인 필요: ${vatUnknown.map((row)=>row.company||"업체").join(", ")}`;
     line.append(document.createTextNode(text)); box.append(line);
+    if(check.length){
+      const sub=document.createElement("p"); sub.className="quote-check";
+      const label=(row)=>{const v=quoteVatTotal(row), n=toNumber(row.amount); const money=v!==null?manwon(v):Number.isFinite(n)&&n!==null?`${manwon(n)}(부가세 미확인)`:"금액 없음"; return `${row.company||"업체"} ${money} · ${row.same==="조건 다름"?"조건 다름":"범위 미확인"}`;};
+      sub.textContent=`범위 확인 전 ${check.length}곳 (순위에 넣지 않음): ${check.map(label).join(" / ")}`;
+      box.append(sub);
+    }
   });
 }
 
 function renderProjectForm(){
   document.querySelectorAll("[data-project-field]").forEach((field)=>{
     const key=field.dataset.projectField; field.value=data.project[key]??"";
+    if(key==="budget")moneyRead(field);
     if(field.dataset.bound)return; field.dataset.bound="1";
     field.addEventListener(field.tagName==="SELECT"||field.type==="date"?"change":"input",()=>{
       data.project[key]=field.type==="text"||field.tagName==="TEXTAREA"?field.value:field.value; persistData();
-      if(key==="budget")renderBudgetSummary();
+      if(key==="budget"){moneyRead(field); renderBudgetSummary(); renderWorksSummary();}
       if(["customer","home","area"].includes(key))renderProject(); renderPageHead();
     });
     field.addEventListener("change",()=>{if(["start","end"].includes(key)){persistData(); renderAll();}});
@@ -2686,27 +3010,39 @@ function rerenderKeepingFocus(){
 function renderWorkbench(){
   renderPageHead(); renderProjectForm(); renderScheduleTable();
   Object.keys(wbTables).forEach(renderWbTable);
-  const questions=document.querySelector("#wbQuestions"); if(questions){questions.value=data.workbench.questions||""; if(!questions.dataset.bound){questions.dataset.bound="1"; questions.addEventListener("input",()=>{data.workbench.questions=questions.value; persistData();});}}
+  renderWorks();
+  const questions=document.querySelector("#wbQuestions"); if(questions){questions.value=data.workbench.questions||""; if(!questions.dataset.bound){questions.dataset.bound="1"; questions.addEventListener("input",()=>{data.workbench.questions=questions.value; persistData(); renderSendStatus();});}}
   renderSendStatus();
 }
 function filledSummary(){
   const p=data.project, wb=data.workbench;
   return [
-    ["내 현장 정보",["customer","home","area","start","end","budget"].filter((k)=>String(p[k]||"").trim()).length,6],
-    ["공정 계획",data.schedule.length,null],
-    ["예산",wb.budgets.filter((r)=>String(r.plan||"").trim()).length,null],
+    ["현장 정보",["customer","home","area","start","end","budget"].filter((k)=>String(p[k]||"").trim()).length,6],
+    ["공사 일정",data.schedule.length,null],
+    ["공정별 공사계획",wb.budgets.filter((r)=>!r.skip&&String(r.want||"").trim()).length,null],
+    ["예산·견적",wb.budgets.filter((r)=>["diag","crew","contract"].some((k)=>String(r[k]||"").trim())||(r.others||[]).length).length,null],
     ["업체 견적",wb.quotes.length,null],
     ["자재",wb.materials.length,null],
-    ["궁금한 점",wb.questions.trim()?1:0,null],
+    ["궁금한 점",String(wb.questions||"").split(/\n/).filter((line)=>line.trim()).length,null],
   ];
 }
 function renderSendStatus(){
   const box=document.querySelector("#sendStatus"); if(!box)return; box.innerHTML="";
   filledSummary().forEach(([label,count,max])=>{const li=document.createElement("li"); li.className=count?"done":""; li.textContent=max?`${label} ${count}/${max}칸`:`${label} ${count}건`; box.append(li);});
+  renderSendGate();
+}
+// 보내기 막는 조건: 고객 이름 + 확인 체크 (대표 11/12)
+function sendMissing(){const miss=[]; if(!String(data.project.customer||"").trim())miss.push("현장 정보의 고객명"); if(!data.workbench.confirmed)miss.push("위 확인 체크"); return miss;}
+function renderSendGate(){
+  const box=document.querySelector("#sendConfirm"); if(box){box.checked=Boolean(data.workbench.confirmed); if(!box.dataset.bound){box.dataset.bound="1"; box.addEventListener("change",()=>{data.workbench.confirmed=box.checked; persistData(); renderSendGate();});}}
+  const miss=sendMissing(), button=document.querySelector("#sendPrintButton"), gate=document.querySelector("#sendGate");
+  if(button)button.setAttribute("aria-disabled",String(Boolean(miss.length)));
+  if(gate){gate.textContent=miss.length?`PDF를 만들려면 ${miss.join("과 ")}이 필요해요.`:""; gate.hidden=!miss.length;}
 }
 function exportBackup(){
-  let guide={}; try{guide=JSON.parse(localStorage.getItem(`${dataStorageKey}-guide`)||"{}")||{};}catch{}
-  const blob=new Blob([JSON.stringify({kind:"arc-customer-prep",version:1,savedAt:new Date().toISOString(),data,guide},null,2)],{type:"application/json"});
+  let guide={}, checks=null; try{guide=JSON.parse(localStorage.getItem(`${dataStorageKey}-guide`)||"{}")||{};}catch{}
+  try{const raw=localStorage.getItem(`${dataStorageKey}-checks`); if(raw)checks=JSON.parse(raw);}catch{} // 홈 체크리스트 체크(11/12)
+  const blob=new Blob([JSON.stringify({kind:"arc-customer-prep",version:1,savedAt:new Date().toISOString(),data,guide,...(checks&&typeof checks==="object"?{checks}:{})},null,2)],{type:"application/json"});
   const link=document.createElement("a"); link.href=URL.createObjectURL(blob); link.download=`${[data.project.customer,"ARC_고객체크리스트_내작성내용",new Date().toISOString().slice(0,10).replaceAll("-","")].filter(Boolean).join("_").replace(/[\\/:*?"<>|\s]/g,"-")}.json`; document.body.append(link); link.click(); link.remove(); setTimeout(()=>URL.revokeObjectURL(link.href),2000);
 }
 function importBackup(file){
@@ -2717,10 +3053,12 @@ function importBackup(file){
       if(!incoming||typeof incoming!=="object")throw new Error("ARC 고객 체크리스트에서 저장한 파일이 아닙니다.");
       if(!confirm("지금 화면의 내용을 저장해 둔 파일 내용으로 바꿀까요?"))return;
       if(parsed.guide&&typeof parsed.guide==="object"){try{localStorage.setItem(`${dataStorageKey}-guide`,JSON.stringify(parsed.guide));}catch{}}
+      // 옛 파일에 checks가 없으면 지금 기기의 체크를 그대로 둠
+      if(parsed.checks&&typeof parsed.checks==="object"){try{localStorage.setItem(`${dataStorageKey}-checks`,JSON.stringify(parsed.checks));}catch{}}
       const keepId=data.instanceId, keepAudience=data.audience;
       data={...clone(defaultData),...incoming,instanceId:keepId,audience:keepAudience};
       data.project={...defaultData.project,...(incoming.project||{})}; data.checklist={...clone(defaultData.checklist),...(incoming.checklist||{})}; data.schedule=Array.isArray(incoming.schedule)?incoming.schedule:[]; data.workbench=normalizeWorkbench(incoming.workbench); migrateMoneyToWon(data);
-      persistData(); if(parsed.guide){location.reload(); return;} renderAll(); arcNotice("저장한 파일을 불러왔습니다.");
+      persistData(); if(parsed.guide||parsed.checks){location.reload(); return;} renderAll(); arcNotice("저장한 파일을 불러왔습니다.");
     }catch(error){arcNotice(`불러오지 못했습니다 · ${error.message}`);}
   };
   reader.readAsText(file);
@@ -2745,6 +3083,8 @@ function showTab(id,{scroll=false}={}){
   document.querySelectorAll("#tabNav [data-tab]").forEach((b)=>{const on=b.dataset.tab===id; b.classList.toggle("active",on); b.setAttribute("aria-current",on?"page":"false");});
   document.body.dataset.page=id; document.querySelectorAll("#tabNav .gnav-group").forEach((group)=>group.classList.toggle("current",Boolean(group.querySelector(`[data-tab="${id}"]`))));
   try{localStorage.setItem(tabKey,id);}catch{}
+  if(id==="tab-send")renderSendStatus();
+  if(id==="tab-works")renderWorks();
   if(scroll)document.querySelector("#tabNav")?.scrollIntoView({behavior:"smooth",block:"start"});
   return true;
 }
@@ -2856,7 +3196,7 @@ document.querySelector("#guide .ag-print-all")?.addEventListener("click",()=>pri
 /* ===== 달력에서 바로 공정 적기 (대표 11/11) ===== */
 (function calendarQuickAdd(){
   const stack=document.querySelector("#calendarStack"); if(!stack)return;
-  const hint=document.createElement("p"); hint.className="cal-add-hint"; hint.textContent="달력의 날짜를 누르면 그 날에 공정을 바로 적을 수 있습니다. 적은 일정은 공정 계획에도 함께 들어갑니다.";
+  const hint=document.createElement("p"); hint.className="cal-add-hint"; hint.textContent="달력의 날짜를 누르면 그 날에 공정을 바로 적을 수 있습니다. 적은 일정은 공사 일정에도 함께 들어갑니다.";
   stack.before(hint);
   const sheet=document.createElement("div"); sheet.className="cal-sheet"; sheet.hidden=true;
   sheet.innerHTML=`<div class="cal-sheet-dim" data-close></div>
@@ -2951,29 +3291,61 @@ document.querySelector("#guide .ag-print-all")?.addEventListener("click",()=>pri
   window.arcOpenCalendarDay=open;
 })();
 
+/* ===== 인쇄용 글 사본: 글상자·한 줄 칸은 인쇄 때 보이는 높이·폭만큼만 찍혀 잘림 → 같은 글을 일반 글로 찍음 (11/12 1단계) ===== */
+function printMirrors(){
+  document.querySelectorAll(".tab-panel textarea, .tab-panel input[type=text], .tab-panel input:not([type])").forEach((el)=>{
+    let mirror=el.nextElementSibling?.classList?.contains("print-mirror")?el.nextElementSibling:null;
+    if(!mirror){mirror=document.createElement("div"); mirror.className="print-mirror"; mirror.setAttribute("aria-hidden","true"); el.after(mirror);}
+    mirror.textContent=el.value; el.classList.add("has-mirror");
+  });
+  // 빈 칸은 PDF에 예시 글씨·"연도-월-일"이 찍히지 않게
+  document.querySelectorAll("input,textarea").forEach((el)=>el.classList.toggle("print-empty",!el.value));
+}
+window.addEventListener("beforeprint",printMirrors);
+
 /* ===== 대표 11/11 회의: 고객 작성본 PDF · 불러오기 안내 · 카카오톡 안내 ===== */
 function arcNotice(text){const el=document.querySelector("#sendNotice"); if(el)el.textContent=text; try{alert(text);}catch{}}
 // ARC에 보낼 PDF: 고객이 적은 화면만, 맨 위에 '고객 작성본'·이름·현장·작성일시
 function printSubmit(){
+  const miss=sendMissing(); if(miss.length){renderSendGate(); arcNotice(`PDF를 만들려면 ${miss.join("과 ")}이 필요해요.`); if(miss[0].includes("고객명"))document.querySelector('[data-project-field="customer"]')?.focus(); else document.querySelector("#sendConfirm")?.focus(); return;}
+  renderSubmitWorks();
   const now=new Date(), pad=(n)=>String(n).padStart(2,"0");
   document.querySelector("#submitCustomer").textContent=data.project.customer?.trim()||"(이름 미입력)";
   document.querySelector("#submitHome").textContent=[data.project.home,data.project.area].filter(Boolean).join(" · ")||"(미입력)";
   document.querySelector("#submitDate").textContent=`${now.getFullYear()}.${pad(now.getMonth()+1)}.${pad(now.getDate())} ${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  const stamp=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}`;
+  const stamp=`${now.getFullYear()}${pad(now.getMonth()+1)}${pad(now.getDate())}-${pad(now.getHours())}${pad(now.getMinutes())}`;
   const oldTitle=document.title; document.title=[data.project.customer?.trim(),"ARC_고객작성본",stamp].filter(Boolean).join("_").replace(/[\\/:*?"<>|\s]/g,"-");
   let topDoc=null, topOld=""; try{if(window.top&&window.top!==window){topDoc=window.top.document; topOld=topDoc.title; topDoc.title=document.title;}}catch{}
-  // 빈 칸은 PDF에 예시 글씨·"연도-월-일"이 찍히지 않게
-  document.querySelectorAll("input,textarea").forEach((el)=>el.classList.toggle("print-empty",!el.value));
+  printMirrors();
   document.body.classList.add("print-submit");
-  const done=()=>{document.body.classList.remove("print-submit"); document.title=oldTitle; if(topDoc)topDoc.title=topOld;};
+  let finished=false;
+  const done=()=>{if(finished)return; finished=true; document.body.classList.remove("print-submit"); document.title=oldTitle; if(topDoc)topDoc.title=topOld;};
   window.addEventListener("afterprint",done,{once:true});
-  window.print(); setTimeout(done,1500);
+  // 인쇄 창이 바로 돌아오는 기기(아이폰 등)에서도 PDF가 고객 작성본으로 찍히게: 시간이 지나도 고객이 다시 화면을 만질 때까지 유지
+  setTimeout(()=>{if(finished)return; const back=()=>{["pointerdown","keydown","touchstart"].forEach((t)=>document.removeEventListener(t,back,true)); done();}; ["pointerdown","keydown","touchstart"].forEach((t)=>document.addEventListener(t,back,true));},1500);
+  window.print();
   arcNotice("인쇄 창에서 'PDF로 저장'을 고른 뒤, 저장된 PDF를 ARC 카카오톡 채널에 보내 주세요.");
+}
+// 보내는 PDF 첫 장: 공정별 공사계획 표(공정 · 하고 싶은 것 · 이 공정에 쓸 예산)
+function renderSubmitWorks(){
+  const host=document.querySelector("#submitWorks"); if(!host)return; host.innerHTML="";
+  const rows=data.workbench.budgets, active=rows.filter((r)=>!r.skip&&(String(r.want||"").trim()||String(r.plan||"").trim())), skipped=rows.filter((r)=>r.skip);
+  const h=document.createElement("h2"); h.textContent="공정별 공사계획"; host.append(h);
+  const table=document.createElement("table"); table.className="submit-works-table";
+  table.innerHTML="<thead><tr><th>공정</th><th>하고 싶은 것</th><th>이 공정에 쓸 예산</th></tr></thead>";
+  const body=document.createElement("tbody");
+  if(!active.length){const tr=document.createElement("tr"); const td=document.createElement("td"); td.colSpan=3; td.textContent="아직 적은 공정이 없습니다."; tr.append(td); body.append(tr);}
+  active.forEach((r)=>{const tr=document.createElement("tr"); [r.trade||"공정",String(r.want||"").trim()||"-",(()=>{const n=toNumber(r.plan); return Number.isFinite(n)&&n!==null?manwon(n):String(r.plan||"").trim()||"-";})()].forEach((v)=>{const td=document.createElement("td"); td.textContent=v; tr.append(td);}); body.append(tr);});
+  table.append(body);
+  const total=toNumber(data.project.budget), sum=sumField(rows.filter((r)=>!r.skip),"plan");
+  const foot=document.createElement("tfoot"); const ft=document.createElement("tr"); [["합계",""],[Number.isFinite(total)&&total!==null?`총예산 ${manwon(total)} · 남은 금액 ${manwon(total-sum)}`:"총예산 미입력",""],[manwon(sum),""]].forEach(([v])=>{const td=document.createElement("td"); td.textContent=v; ft.append(td);}); foot.append(ft); table.append(foot);
+  host.append(table);
+  if(skipped.length){const p=document.createElement("p"); p.className="submit-works-skip"; p.textContent=`이 공정 안 함: ${skipped.map((r)=>r.trade||"공정").join(", ")}`; host.append(p);}
 }
 // 빈 화면이면 맨 위에 '저장한 파일 불러오기' 안내
 (function resumeNotice(){
   const box=document.querySelector("#resumeNotice"); if(!box)return;
-  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.plan||r.quote||r.contract)&&!(data.workbench?.quotes||[]).length&&!(data.workbench?.materials||[]).length;
+  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.plan||r.quote||r.contract||r.want||r.diag||r.crew||(r.others||[]).length)&&!(data.workbench?.quotes||[]).length&&!(data.workbench?.materials||[]).length;
   // 빈 화면이면 긴 안내, 적은 내용이 있으면 얇은 줄(저장/불러오기) — 항상 보임, ×는 새로 고치기 전까지만
   const sync=()=>{if(box.dataset.closed)return; box.hidden=false; box.classList.toggle("compact",!empty());};
   sync();
