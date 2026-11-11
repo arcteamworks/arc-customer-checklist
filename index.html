@@ -1386,6 +1386,15 @@ body.cal-sheet-open { overflow:hidden; }
   body.print-submit .wb-table input, body.print-submit .wb-table select { width:100% !important; min-width:0 !important; font-size:7.5pt !important; padding:0 !important; border:0 !important; }
   body.print-submit .wb-weekend { display:none !important; }
 }
+/* 불러오기 안내: 적은 내용이 있으면 얇은 줄로 */
+.open-notice .resume-actions { display:flex; gap:8px; flex-wrap:wrap; }
+.open-notice .resume-short { display:none; }
+.open-notice.compact { display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:10px 48px 10px 16px; }
+.open-notice.compact .resume-full { display:none; }
+.open-notice.compact .resume-short { display:inline-flex; }
+.open-notice.compact span.resume-short { color:var(--muted); font-size:.82rem; }
+.open-notice.compact .secondary-button { min-height:36px; padding:6px 14px; font-size:.82rem; }
+.open-notice.compact .open-notice-close { top:50%; transform:translateY(-50%); }
 </style>
 </head>
 <body>
@@ -1561,9 +1570,10 @@ body.cal-sheet-open { overflow:hidden; }
       <button type="button" class="primary-button" id="openExternal">브라우저로 열기</button>
     </div>
     <div class="open-notice resume" id="resumeNotice" hidden="">
-      <strong>전에 적어 두신 내용이 있나요?</strong>
-      <p>처음 연 브라우저에서 다시 열면 적은 내용이 그대로 남아 있습니다. 다른 브라우저나 기기에서 적으셨다면, 저장해 둔 파일을 불러오세요.</p>
-      <button type="button" class="secondary-button" id="resumeRestore">저장한 파일 불러오기</button>
+      <strong class="resume-full">전에 적어 두신 내용이 있나요?</strong>
+      <p class="resume-full">처음 연 브라우저에서 다시 열면 적은 내용이 그대로 남아 있습니다. 다른 브라우저나 기기에서 적으셨다면, 저장해 둔 파일을 불러오세요.</p>
+      <span class="resume-short">다른 기기·브라우저에서 이어 쓰려면</span>
+      <div class="resume-actions"><button type="button" class="secondary-button resume-short" id="resumeSave">내 작성 내용 저장</button><button type="button" class="secondary-button" id="resumeRestore">저장한 파일 불러오기</button></div>
       <button type="button" class="open-notice-close" id="resumeClose" aria-label="안내 닫기">×</button>
     </div>
     <section class="page-head" aria-labelledby="pageTitle">
@@ -1803,7 +1813,7 @@ body.cal-sheet-open { overflow:hidden; }
     <p data-copy-key="footer.note">예정 공정표이며 현장 상황과 자재 입고 일정에 따라 변경될 수 있습니다. 변경 시 날짜·내용·확인한 사람을 함께 기록해 주세요.</p>
   </footer>
 
-  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"a691a13d-0e2a-4e8c-921e-ce2db52dd610","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7a2e6377-a41e-4f6e-a233-e110b6b83023","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"31ddc65f-51d3-4061-a189-ffeeb747e56a","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"6418b0c5-7551-407b-b27f-21e87b7a0071","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"d5236842-d94f-4e97-8494-b4c561b10c04","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7bc8c19c-3612-4524-b743-8841f398bcde","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"13ccfd2a-51ef-4e5c-9e33-ddedaf1f5a4d","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"b5381dd9-9f62-4aac-b490-00aad02ac426","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7c1fd25c-529f-49c4-9f5e-e762d17f92ad","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"646bd1e0-d5f6-4d8a-ad1b-f65e41c5a6a3","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1ae17214-8725-43ae-8d26-9cc6ffe9fb49","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"f4319486-d6c7-4767-9bdc-c81f4a749a4c","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"0916b993-eebe-4af7-aee9-c53ecbfcf6c1","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"8520aea5-2686-429c-ab65-48204d555f9a","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"d5eef0a0-39b3-4991-9a7d-17a7cd9eb210","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"e3403d42-5be4-4704-b64f-18d9dd4707ed","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"7da584b1-765b-49ef-8c58-791857d99660","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":""}],"quotes":[],"materials":[],"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T12:39:39.839Z"}</script>
+  <script id="arc-seed-data" type="application/json">{"instanceId":"662f3005-7e5b-4878-be2b-05a69af1fb75","audience":"customer","project":{"customer":"","home":"","area":"","start":"","end":"","moveIn":"","budget":"","reserve":"미정","household":"","memo":""},"display":{"title":"공정별 고객 방문 및 사전 준비","description":"현장에 꼭 가야 하는 날과 미리 결정할 일을 한 화면에서 확인하세요.","font":"arc","scale":100},"planner":{"general":"","important":""},"checklist":{"hidden":[],"overrides":{},"custom":[],"groups":[]},"workbench":{"budgets":[{"id":"fb3c058c-06d8-4d64-bb13-09b8b008b8fb","trade":"철거·폐기물","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"4f0c9c4e-8cb1-4116-89a7-400aa394daca","trade":"설비(급배수·보일러)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"3bf2eff2-3eb1-4d21-8e40-c8fd9ef8a945","trade":"방수","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"4c9e8d6b-b81e-4ec4-9d73-1558cf7feb91","trade":"전기·조명·통신","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"66003114-1917-4184-9b9c-a5d6c2105b13","trade":"창호(샷시)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"c7c654a9-86aa-4e57-96ad-cfd84759b0d4","trade":"시스템에어컨","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"b74d8cae-5431-4dac-82b0-2565a4ee5db8","trade":"목공·도어","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1c17945a-126d-43a9-9212-1ad4734ba595","trade":"욕실·타일","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"bc804163-c4e2-47a7-b1d5-8f962c9122a2","trade":"바닥재(마루)","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"9a4af5e6-7f9d-4d85-a4ac-271e5203ce2e","trade":"도배·도장","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"3338ebc6-0190-4740-ad65-32a110afcc69","trade":"필름","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"9d23bb4f-bb07-4574-a761-a0e701f339a9","trade":"탄성코트","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"59a658e2-7585-4785-887a-a764f1bfd935","trade":"주방·제작가구","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"dd786714-60c1-469b-ad41-cc1fdba6f3bb","trade":"입주청소","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"1869ea5a-b309-4e10-8cf2-814a024cc455","trade":"가전·가구 구입","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"ddea0243-e041-4623-a65b-2e3978813cd7","trade":"관리·신고·기타","priority":"미정","plan":"","quote":"","contract":"","memo":""},{"id":"2fd2ea0e-d079-46a3-b545-b4711df12e4f","trade":"예비비","priority":"미정","plan":"","quote":"","contract":"","memo":""}],"quotes":[],"materials":[],"questions":"","unit":"won"},"calendarNotes":{},"copy":{},"schedule":[],"savedAt":"2026-11-11T13:05:46.861Z"}</script>
   <script>(async()=>{
 // 화면을 그리기 전 원본 (파일 저장 때 이걸 씀: 화면에서 붙인 버튼이 두 번 생기지 않게)
 const pristineHtml=`<!doctype html>\n${document.documentElement.outerHTML}`;
@@ -2963,12 +2973,14 @@ function printSubmit(){
 // 빈 화면이면 맨 위에 '저장한 파일 불러오기' 안내
 (function resumeNotice(){
   const box=document.querySelector("#resumeNotice"); if(!box)return;
-  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.item||r.plan)&&!(data.workbench?.quotes||[]).length;
-  let closed=false; try{closed=sessionStorage.getItem("arc-resume-closed")==="1";}catch{}
-  box.hidden=closed||!empty();
+  const empty=()=>!data.project.customer&&!data.project.home&&!data.schedule.length&&!(data.workbench?.budgets||[]).some((r)=>r.plan||r.quote||r.contract)&&!(data.workbench?.quotes||[]).length&&!(data.workbench?.materials||[]).length;
+  // 빈 화면이면 긴 안내, 적은 내용이 있으면 얇은 줄(저장/불러오기) — 항상 보임, ×는 새로 고치기 전까지만
+  const sync=()=>{if(box.dataset.closed)return; box.hidden=false; box.classList.toggle("compact",!empty());};
+  sync();
   document.querySelector("#resumeRestore")?.addEventListener("click",()=>document.querySelector("#restoreInput").click());
-  document.querySelector("#resumeClose")?.addEventListener("click",()=>{box.hidden=true; try{sessionStorage.setItem("arc-resume-closed","1");}catch{}});
-  document.addEventListener("input",()=>{if(!box.hidden&&!empty())box.hidden=true;},{passive:true});
+  document.querySelector("#resumeSave")?.addEventListener("click",()=>{exportBackup(); arcNotice("파일을 저장했습니다. 아이폰은 '파일' 앱의 다운로드 폴더에 들어갑니다.");});
+  document.querySelector("#resumeClose")?.addEventListener("click",()=>{box.hidden=true; box.dataset.closed="1";});
+  document.addEventListener("input",sync,{passive:true}); document.addEventListener("change",sync,{passive:true});
 })();
 // 카카오톡 안에서 열렸으면 브라우저로 열기 안내
 (function kakaoNotice(){
